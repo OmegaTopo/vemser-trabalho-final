@@ -1,2 +1,2 @@
-public class Ranking {
+public class Ranking implements Imprimir{
 }
