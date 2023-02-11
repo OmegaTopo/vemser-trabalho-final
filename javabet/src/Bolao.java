@@ -6,8 +6,7 @@ public class Bolao implements Premio {
     private boolean finalizado;
     private int cotas;
 
-    public Bolao(boolean finalizado, int cotas) {
-        this.setFinalizado(finalizado);
+    public Bolao(int cotas) {
         this.setCotas(cotas);
         this.setApostadores(new ArrayList<>());
         this.setApostas(new ArrayList<>());

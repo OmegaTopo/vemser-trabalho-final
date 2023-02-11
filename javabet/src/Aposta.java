@@ -1,23 +1,19 @@
+import java.util.*;
 public class Aposta implements Premio {
 
     private Jogo jogo;
     private String previsaoTime;
-    private int previsaoPlacar[];
+    private int[] previsaoPlacar = {0,0};
     private boolean finalizado;
 
-    public Aposta(Jogo jogo, String previsaoTime, int previsaoPlacar[], boolean finalizado) {
+    public Aposta(Jogo jogo, String previsaoTime) {
         this.jogo = jogo;
         this.previsaoTime = previsaoTime;
-        this.previsaoPlacar = previsaoPlacar;
         this.finalizado = false;
     }
 
-<<<<<<< HEAD
-    public Aposta (){
-
-=======
     public Aposta() {
->>>>>>> a5f873a7515cb3c978121a828ec691e3d26c7bf1
+
     }
 
     public Jogo getJogo() {
@@ -40,8 +36,8 @@ public class Aposta implements Premio {
         return previsaoPlacar;
     }
 
-    public void setPrevisaoPlacar(int previsaoPlacar[]) {
-        this.previsaoPlacar = previsaoPlacar;
+    public void setPrevisaoPlacar(int index, int previsaoPlacar) {
+        getPrevisaoPlacar()[index] = previsaoPlacar;
     }
 
     public boolean getFinalizado() {
@@ -55,5 +51,10 @@ public class Aposta implements Premio {
     @Override
     public boolean distribuirPremio() {
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Aposta{" + "jogo=" + jogo + ", previsaoTime=" + previsaoTime + ", previsaoPlacar=" + Arrays.toString(previsaoPlacar) + ", finalizado=" + finalizado + '}';
     }
 }

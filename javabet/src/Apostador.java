@@ -12,21 +12,11 @@ public class Apostador extends Usuario implements Imprimir {
     public Apostador(String nome, String dia, String mes, int ano, String cpf, String email, String senha) {
         super(email, senha);
         this.nome = nome;
-<<<<<<< HEAD
-        this.dataNascimento = new Date(ano-1900, mes-1, dia);
-        this.cpf = cpf;
         this.pontos = 0;
         this.apostas = new ArrayList<>();
         this.boloes = new ArrayList<>();
-=======
-        this.dataNascimento = new Date(ano, Integer.parseInt(mes) - 1, Integer.parseInt(dia));
+        this.dataNascimento = new Date(ano-1900, Integer.parseInt(mes) - 1, Integer.parseInt(dia));
         this.cpf = cpf;
-        this.pontos = 0;
-        this.apostas = new ArrayList<>();
-        ;
-        this.boloes = new ArrayList<>();
-        ;
->>>>>>> a5f873a7515cb3c978121a828ec691e3d26c7bf1
     }
 
     @Override
@@ -84,15 +74,12 @@ public class Apostador extends Usuario implements Imprimir {
     public void imprimir() {
         System.out.println(this.toString());
     }
-<<<<<<< HEAD
-=======
 
     public boolean realizarAposta(Jogo jogo) {
         return false;
     }
 
     public boolean comprarCotaBolao() {
-        return false
+        return false;
     }
->>>>>>> a5f873a7515cb3c978121a828ec691e3d26c7bf1
 }
