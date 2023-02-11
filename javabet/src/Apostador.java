@@ -7,6 +7,7 @@ public class Apostador extends Usuario implements Imprimir{
     private ArrayList<Aposta> apostas;
     private ArrayList<Bolao> boloes;
     private String nome;
+<<<<<<< HEAD
     private Date dataNascimento;
     private String cpf;
 
@@ -75,4 +76,7 @@ public class Apostador extends Usuario implements Imprimir{
     public void imprimir() {
         System.out.println(this.toString());
     }
+=======
+    private Date;
+>>>>>>> 754291d701fdfa8faa0eda918df71f905c870c3e
 }
