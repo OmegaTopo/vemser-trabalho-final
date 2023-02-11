@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 
 public class Apostador extends Usuario implements Imprimir{
 
@@ -7,18 +6,17 @@ public class Apostador extends Usuario implements Imprimir{
     private ArrayList<Aposta> apostas;
     private ArrayList<Bolao> boloes;
     private String nome;
-<<<<<<< HEAD
     private Date dataNascimento;
     private String cpf;
 
     public Apostador(String nome, int dia, int mes, int ano, String cpf, String email, String senha) {
         super(email, senha);
         this.nome = nome;
-        this.dataNascimento = new Date(ano, mes, dia);
+        this.dataNascimento = new Date(ano-1900, mes-1, dia);
         this.cpf = cpf;
         this.pontos = 0;
-        this.apostas = new ArrayList<>();;
-        this.boloes = new ArrayList<>();;
+        this.apostas = new ArrayList<>();
+        this.boloes = new ArrayList<>();
     }
 
     @Override
@@ -76,7 +74,4 @@ public class Apostador extends Usuario implements Imprimir{
     public void imprimir() {
         System.out.println(this.toString());
     }
-=======
-    private Date;
->>>>>>> 754291d701fdfa8faa0eda918df71f905c870c3e
 }

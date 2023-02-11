@@ -11,6 +11,9 @@ public class Jogo {
         this.setFinalizado(finalizado);
     }
 
+    public Jogo() {
+    }
+
     public String getCampeonato() {
         return campeonato;
     }

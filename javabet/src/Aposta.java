@@ -12,6 +12,10 @@ public class Aposta implements Premio{
         this.finalizado = false;
     }
 
+    public Aposta (){
+
+    }
+
     public Jogo getJogo() {
         return jogo;
     }
@@ -33,7 +37,7 @@ public class Aposta implements Premio{
         this.previsaoPlacar = previsaoPlacar;
     }
 
-    public boolean isFinalizado() {
+    public boolean getFinalizado() {
         return finalizado;
     }
     public void setFinalizado(boolean finalizado) {

@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 
 public class Bolao implements Premio{
     private ArrayList<Aposta> apostas;
