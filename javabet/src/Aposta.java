@@ -5,6 +5,13 @@ public class Aposta implements Premio{
     private int previsaoPlacar[];
     private boolean finalizado;
 
+    public Aposta (Jogo jogo, String previsaoTime, int previsaoPlacar[], boolean finalizado){
+        this.jogo = jogo;
+        this.previsaoTime = previsaoTime;
+        this.previsaoPlacar = previsaoPlacar;
+        this.finalizado = false;
+    }
+
     public Jogo getJogo() {
         return jogo;
     }
@@ -19,10 +26,10 @@ public class Aposta implements Premio{
         this.previsaoTime = previsaoTime;
     }
 
-    public int getPrevisaoPlacar() {
+    public int[] getPrevisaoPlacar() {
         return previsaoPlacar;
     }
-    public void setPrevisaoPlacar(int previsaoPlacar) {
+    public void setPrevisaoPlacar(int previsaoPlacar[]) {
         this.previsaoPlacar = previsaoPlacar;
     }
 
@@ -33,8 +40,6 @@ public class Aposta implements Premio{
         this.finalizado = finalizado;
     }
 
-    public Aposta() {
-    }
     @Override
     public boolean distribuirPremio() {
         return false;
