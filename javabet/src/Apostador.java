@@ -78,7 +78,7 @@ public class Apostador extends Usuario implements Imprimir {
     public boolean realizarAposta(Jogo jogo) {
         if (pontos > 1) {
             Administrador.getJogos().stream()
-                    .filter
+                    .filter(jogo1 -> jogo.getPais())
         }
         return false;
     }
