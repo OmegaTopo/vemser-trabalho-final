@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Bolao implements Premio{
+public class Bolao implements Premio {
     private ArrayList<Aposta> apostas;
     private ArrayList<Apostador> apostadores;
     private boolean finalizado;
@@ -12,21 +12,23 @@ public class Bolao implements Premio{
         this.setApostadores(new ArrayList<>());
         this.setApostas(new ArrayList<>());
     }
-    public boolean cadastrarAposta(Aposta aposta){
-        try
-        {
+
+    public Bolao() {
+    }
+
+    public boolean cadastrarAposta(Aposta aposta) {
+        try {
             this.apostas.add(aposta);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
         return true;
     }
 
-    public boolean cadastrarApostador(Apostador apostador){
+    public boolean cadastrarApostador(Apostador apostador) {
         try {
             this.apostadores.add(apostador);
-        } catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
         return true;
