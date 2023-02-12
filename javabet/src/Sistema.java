@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Sistema {
     private Scanner scanner = new Scanner(System.in);
     private ArrayList<Apostador> apostadores = new ArrayList<>();
-    private ArrayList<Administrador> administradores = new ArrayList<>();
+    private AdministradorCrud administradorCrud = new AdministradorCrud();
     private ArrayList<Jogo> jogos = new ArrayList<>();
     private ArrayList<Bolao> boloes = new ArrayList<>();
     private Usuario usuarioAtivo;
@@ -113,7 +113,6 @@ public class Sistema {
 
     }
 
-
     public void apostadorRealizarAposta() {
         if (!(usuarioAtivo instanceof Apostador)) {
             System.out.println("\n\t----USUÁRIO INVÁLIDO PARA ESTE MÉTODO----");
@@ -159,23 +158,6 @@ public class Sistema {
         System.out.println("\n\t----APOSTA REALIZADA COM SUCESSO----");
     }
 
-    //    Métodos relacionados ao Administrador
-    public void cadastroDeAdministrador() {
-        try {
-            System.out.println("\n\tCADASTRO DE ADMINISTRADOR\n---------------------");
-//        E-mail
-            System.out.print("\tE-mail: ");
-            String email = scanner.nextLine();
-//        Senha
-            System.out.print("\tSenha: ");
-            String senha = scanner.nextLine();
-//        Fim do cadastro
-            administradores.add(new Administrador(email, senha));
-        } catch (Exception e) {
-            System.out.println("\n----ERRO AO REALIZAR O CADASTRO----\n");
-        }
-    }
-
     //    Métodos gerais de funcionamento do sistema
     public boolean verificarLogin(String email, String senha) {
         for (Apostador apostador : apostadores) {
@@ -184,7 +166,7 @@ public class Sistema {
                 return true;
             }
         }
-        for (Administrador administrador : administradores) {
+        for (Administrador administrador : administradorCrud.getAdministradores()) {
             if (administrador.getEmail().equals(email) && administrador.getSenha().equals(senha)) {
                 usuarioAtivo = administrador;
                 return true;
@@ -208,7 +190,7 @@ public class Sistema {
             opcao = scanner.nextLine();
             switch (opcao) {
                 case "CADM":
-                    cadastroDeAdministrador();
+                    administradorCrud.cadastroDeAdm();
                     break;
                 case "1":
                     cadastroDeApostador();
@@ -281,7 +263,7 @@ public class Sistema {
                     crudApostador();
                     break;
                 case "2":
-                    crudAdministrador();
+                    administradorCrud.crudAdministrador();
                     break;
                 case "3":
                     crudAposta();
@@ -405,32 +387,6 @@ public class Sistema {
         }
     }
 
-    public void crudAdministrador() {
-        System.out.println("\n\t----CRUD ADMINISTRADOR----");
-        String opcao = "";
-        while (!opcao.equals("0")) {
-            System.out.println("\t1 - Cadastrar Administrador");
-            System.out.println("\t2 - Listar Administradores");
-            System.out.println("\t3 - Atualizar Administrador");
-            System.out.println("\t4 - Deletar Administrador");
-            System.out.println("\t0 - Sair");
-            System.out.print("\tEscolha uma opção: ");
-            opcao = scanner.nextLine();
-            switch (opcao) {
-                case "1":
-                    break;
-                case "2":
-                    break;
-                case "3":
-                    break;
-                case "4":
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
     public void crudBolao() {
         System.out.println("\n\t----CRUD BOLAO----");
         String opcao = "";
@@ -499,7 +455,7 @@ public class Sistema {
         }
     }
 
-    public void gerarJogo(){
+    public void gerarJogo() {
         System.out.println(" Digite o campeonato do jogo: ");
         String campeonato = scanner.nextLine();
         System.out.println(" Digite o país do jogo: ");
@@ -527,10 +483,10 @@ public class Sistema {
         jogos.get(index).setPais(pais);
         System.out.println(" Digite o primeiro time: ");
         String time1 = scanner.nextLine();
-        jogos.get(index).setTimes(0,time1);
+        jogos.get(index).setTimes(0, time1);
         System.out.println(" Digite o segundo time: ");
         String time2 = scanner.nextLine();
-        jogos.get(index).setTimes(1,time2);
+        jogos.get(index).setTimes(1, time2);
     }
 
     public void removerJogo() {
@@ -549,10 +505,10 @@ public class Sistema {
 
     //    Métodos relacionados aos testes e acessíveis no menu do ADM
     public void testeInicializar() {
-        this.administradores.add(new Administrador("adm@adm.com", "adm"));
+        this.administradorCrud.getAdministradores().add(new Administrador("adm@adm.com", "adm"));
         this.testeGerarApostadores();
-//        this.testeGerarJogos();
-//        this.testeGerarBolao();
+        this.testeGerarJogos();
+        this.testeGerarBolao();
     }
 
     public void testeGerarApostadores() {
@@ -561,6 +517,7 @@ public class Sistema {
         apostadores.add(new Apostador("Gabriel Kleiman", "09", "02", 1999, "74185296351", "kleiman@mrjavabet.com", "kleiman"));
     }
 
+<<<<<<< HEAD
 //    public void testeGerarJogos(){
 //        Jogo jogo1 = new Jogo("Gauchão", "Brasil");
 //        jogo1.setTimes(0, "Grêmio");
@@ -615,6 +572,52 @@ public class Sistema {
 //}
 
     // comentário aleatório teste do Gabriel Schramm
+=======
+    public void testeGerarJogos() {
+        Jogo jogo1 = new Jogo("Gauchão", "Brasil", "Grêmio", "Inter");
+        jogo1.setPlacar(0, 2);
+        jogo1.setPlacar(1, 1);
+        jogos.add(jogo1);
+
+        Jogo jogo2 = new Jogo("Libertadores", "Brasil", "Bahia", "Vitória");
+        jogo2.setPlacar(0, 1);
+        jogo2.setPlacar(1, 2);
+        jogos.add(jogo2);
+
+        Jogo jogo3 = new Jogo("Libertadores", "Brasil", "Flamengo", "Atlético-MG");
+        jogo3.setPlacar(0, 3);
+        jogo3.setPlacar(1, 0);
+        jogos.add(jogo3);
+
+        Jogo jogo4 = new Jogo("Libertadores", "Brasil", "Corinthians", "Santos");
+        jogo4.setPlacar(0, 0);
+        jogo4.setPlacar(1, 0);
+        jogos.add(jogo4);
+    }
+
+    public void testeGerarBolao() {
+        ArrayList<Aposta> apostas = new ArrayList<>();
+        apostas.add(new Aposta(jogos.get(0), "Grêmio"));
+        apostas.get(0).setPrevisaoPlacar(0, 2);
+        apostas.get(0).setPrevisaoPlacar(1, 1);
+
+        apostas.add(new Aposta(jogos.get(1), "Vitória"));
+        apostas.get(1).setPrevisaoPlacar(0, 2);
+        apostas.get(1).setPrevisaoPlacar(1, 1);
+
+        apostas.add(new Aposta(jogos.get(2), "Flamengo"));
+        apostas.get(1).setPrevisaoPlacar(0, 2);
+        apostas.get(1).setPrevisaoPlacar(1, 1);
+
+        boloes.add(new Bolao(5));
+
+        boloes.get(boloes.size() - 1).setApostas(apostas);
+        boloes.get(boloes.size() - 1).setApostadores(apostadores);
+        for (Apostador apostador : boloes.get(boloes.size() - 1).getApostadores()) {
+            apostador.getBoloes().add(boloes.get(boloes.size() - 1));
+        }
+    }
+>>>>>>> 43683e1e22b0c1346863fda3680b7d35cef50bef
 }
 
 

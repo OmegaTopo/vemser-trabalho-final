@@ -18,7 +18,7 @@ public class Aposta implements Premio {
     public Aposta() {
 
     }
-
+ 
     public Jogo getJogo() {
         return jogo;
     }
