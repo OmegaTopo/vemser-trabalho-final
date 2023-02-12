@@ -25,6 +25,5 @@ public class Ranking implements Imprimir{
 
     @Override
     public void imprimir() {
-
     }
 }

@@ -10,7 +10,7 @@ public class Sistema {
     private ArrayList<Bolao> boloes = new ArrayList<>();
     private Usuario usuarioAtivo;
 
-//  Funções relacionadas ao Apostador
+    //  Funções relacionadas ao Apostador
     public void cadastroDeApostador() {
         try {
             System.out.println("\n\tCADASTRO DE APOSTADOR\n---------------------");
@@ -47,9 +47,10 @@ public class Sistema {
     public void listarApostadores() {
         System.out.println("\n\t\tLISTA DE APOSTADORES\n\t\t---------------------");
         for (int i = 0; i < apostadores.size(); i++) {
-            System.out.println("\t\t\t"+(i + 1) + ". " + apostadores.get(i).getNome());
+            System.out.println("\t\t\t" + (i + 1) + ". " + apostadores.get(i).getNome());
         }
     }
+
     public void atualizarApostador() {
         System.out.println("\n\tATUALIZAÇÃO DE APOSTADOR\n\t------------------------");
         System.out.print("\tDigite o CPF do apostador: ");
@@ -78,7 +79,7 @@ public class Sistema {
                         String mes = scanner.nextLine();
                         System.out.print("\tNovo dia de nascimento: ");
                         String dia = scanner.nextLine();
-                        Date dataNascimento = new Date(ano-1900, Integer.parseInt(mes) - 1, Integer.parseInt(dia));
+                        Date dataNascimento = new Date(ano - 1900, Integer.parseInt(mes) - 1, Integer.parseInt(dia));
                         apostador.setDataNascimento(dataNascimento);
                         break;
                     case "3":
@@ -111,7 +112,9 @@ public class Sistema {
         }
 
     }
-    public void apostadorRealizarAposta(){
+
+
+    public void apostadorRealizarAposta() {
         if (!(usuarioAtivo instanceof Apostador)) {
             System.out.println("\n\t----USUÁRIO INVÁLIDO PARA ESTE MÉTODO----");
             return;
@@ -123,7 +126,7 @@ public class Sistema {
         int index = 0; // Este padrão é apenas para não dar erro adiante, mas ao tentar transformar a opção em int isso será trocado.
         try {
             index = Integer.parseInt(opcao);
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("\n\t----JOGO NÃO ENCONTRADO----");
             return;
         }
@@ -156,7 +159,7 @@ public class Sistema {
         System.out.println("\n\t----APOSTA REALIZADA COM SUCESSO----");
     }
 
-//    Métodos relacionados ao Administrador
+    //    Métodos relacionados ao Administrador
     public void cadastroDeAdministrador() {
         try {
             System.out.println("\n\tCADASTRO DE ADMINISTRADOR\n---------------------");
@@ -172,16 +175,6 @@ public class Sistema {
             System.out.println("\n----ERRO AO REALIZAR O CADASTRO----\n");
         }
     }
-//    Métodos relacionados aos Jogos
-    public void listarJogos() {
-    System.out.println("\n\t\tLISTA DE JOGOS\n\t\t---------------------");
-    Jogo jogo;
-    for (int i = 0; i < jogos.size(); i++) {
-        jogo = jogos.get(i);
-//            Isso tem que ir para o Jogo.toString()
-        System.out.println("\t\t\t"+(i + 1) + ". " + jogo.getTimes()[0] + " x " + jogo.getTimes()[1] + " | " + jogo.getCampeonato() + " | " + jogo.getPais());
-    }
-}
 
     //    Métodos gerais de funcionamento do sistema
     public boolean verificarLogin(String email, String senha) {
@@ -266,7 +259,8 @@ public class Sistema {
             System.out.println("\n\t----USUÁRIO NÃO ENCONTRADO----");
         }
     }
-    public void menuAdministrador(){
+
+    public void menuAdministrador() {
         System.out.println("\n\tBEM VINDO " + usuarioAtivo.getEmail().toUpperCase() + "!\n\t-------------------");
         String opcao = "";
         while (!opcao.equals("0")) {
@@ -303,11 +297,11 @@ public class Sistema {
                     System.out.println("\n\t----APOSTADORES TESTE GERADOS----");
                     break;
                 case "7":
-                    testeGerarJogos();
+//                    testeGerarJogos();
                     System.out.println("\n\t----JOGOS TESTE GERADOS----");
                     break;
                 case "8":
-                    testeGerarBolao();
+//                    testeGerarBolao();
                     System.out.println("\n\t----BOLÃO TESTE GERADOS----");
                     break;
                 case "0":
@@ -318,6 +312,7 @@ public class Sistema {
             }
         }
     }
+
     public void menuApostador() {
         System.out.println("\n\tBEM VINDO " + usuarioAtivo.getEmail().toUpperCase() + "!\n-------------------");
         String opcao = "";
@@ -354,8 +349,9 @@ public class Sistema {
             }
         }
     }
-//    CRUD MENU
-    public void crudApostador(){
+
+    //    CRUD MENU
+    public void crudApostador() {
         System.out.println("\n\t----CRUD APOSTADOR----");
         String opcao = "";
         while (!opcao.equals("0")) {
@@ -382,7 +378,8 @@ public class Sistema {
             }
         }
     }
-    public void crudAposta(){
+
+    public void crudAposta() {
         System.out.println("\n\t----CRUD APOSTA----");
         String opcao = "";
         while (!opcao.equals("0")) {
@@ -407,6 +404,7 @@ public class Sistema {
             }
         }
     }
+
     public void crudAdministrador() {
         System.out.println("\n\t----CRUD ADMINISTRADOR----");
         String opcao = "";
@@ -432,7 +430,8 @@ public class Sistema {
             }
         }
     }
-    public void crudBolao(){
+
+    public void crudBolao() {
         System.out.println("\n\t----CRUD BOLAO----");
         String opcao = "";
         while (!opcao.equals("0")) {
@@ -457,7 +456,8 @@ public class Sistema {
             }
         }
     }
-    public void crudJogo(){
+
+    public void crudJogo() {
         System.out.println("\n\t----CRUD JOGO----");
         String opcao = "";
         while (!opcao.equals("0")) {
@@ -470,81 +470,149 @@ public class Sistema {
             opcao = scanner.nextLine();
             switch (opcao) {
                 case "1":
+                    gerarJogo();
                     break;
                 case "2":
                     listarJogos();
                     break;
                 case "3":
+                    atualizarJogo();
                     break;
                 case "4":
+                    removerJogo();
                     break;
                 default:
                     break;
             }
         }
     }
+
+
+    //    Métodos relacionados aos Jogos
+    public void listarJogos() {
+        System.out.println("\n\t\tLISTA DE JOGOS\n\t\t---------------------");
+        Jogo jogo;
+        for (int i = 0; i < jogos.size(); i++) {
+            jogo = jogos.get(i);
+//            Isso tem que ir para o Jogo.toString()
+            System.out.println("\t\t\t" + (i + 1) + ". " + jogo.getTimes()[0] + " x " + jogo.getTimes()[1] + " | " + jogo.getCampeonato() + " | " + jogo.getPais());
+        }
+    }
+
+    public void gerarJogo(){
+        System.out.println(" Digite o campeonato do jogo: ");
+        String campeonato = scanner.nextLine();
+        System.out.println(" Digite o país do jogo: ");
+        String pais = scanner.nextLine();
+        System.out.println(" Digite o primeiro time: ");
+        String time1 = scanner.nextLine();
+        System.out.println(" Digite o segundo time: ");
+        String time2 = scanner.nextLine();
+        Jogo jogo = new Jogo(campeonato, pais, time1, time2);
+        jogos.add(jogo);
+    }
+
+    public void atualizarJogo() {
+        System.out.println("\n\tATUALIZAÇÃO DE JOGO\n\t------------------------");
+        listarJogos();
+        System.out.print("\tDigite o número do jogo que deseja alterar: ");
+        int index = scanner.nextInt();
+        scanner.nextLine();
+        index--;
+        System.out.println(" Digite o campeonato do jogo: ");
+        String campeonato = scanner.nextLine();
+        jogos.get(index).setCampeonato(campeonato);
+        System.out.println(" Digite o país do jogo: ");
+        String pais = scanner.nextLine();
+        jogos.get(index).setPais(pais);
+        System.out.println(" Digite o primeiro time: ");
+        String time1 = scanner.nextLine();
+        jogos.get(index).setTimes(0,time1);
+        System.out.println(" Digite o segundo time: ");
+        String time2 = scanner.nextLine();
+        jogos.get(index).setTimes(1,time2);
+    }
+
+    public void removerJogo() {
+        System.out.println("\n\tREMOÇÃO DE JOGO\n---------------------");
+        listarJogos();
+        System.out.print("\tSelecione o número do jogo que deseja remover: ");
+        String selecao = scanner.nextLine();
+        try {
+            jogos.remove(Integer.parseInt(selecao) - 1);
+            System.out.println("\tJogo removido com sucesso.");
+        } catch (Exception e) {
+            System.out.println("\n\t----JOGO NÃO ENCONTRADO----");
+        }
+    }
+
+
     //    Métodos relacionados aos testes e acessíveis no menu do ADM
-    public void testeInicializar(){
+    public void testeInicializar() {
         this.administradores.add(new Administrador("adm@adm.com", "adm"));
         this.testeGerarApostadores();
-        this.testeGerarJogos();
-        this.testeGerarBolao();
+//        this.testeGerarJogos();
+//        this.testeGerarBolao();
     }
+
     public void testeGerarApostadores() {
         apostadores.add(new Apostador("Gabriel Schramm", "07", "02", 1998, "12345678998", "moura@mrjavabet.com", "schramm"));
         apostadores.add(new Apostador("Miguel Krasner", "26", "05", 1980, "78945612364", "miguel@mrjavabet.com", "krasner"));
         apostadores.add(new Apostador("Gabriel Kleiman", "09", "02", 1999, "74185296351", "kleiman@mrjavabet.com", "kleiman"));
     }
-    public void testeGerarJogos(){
-        Jogo jogo1 = new Jogo("Gauchão", "Brasil");
-        jogo1.setTimes(0, "Grêmio");
-        jogo1.setTimes(1, "Inter");
-        jogo1.setPlacar(0, 2);
-        jogo1.setPlacar(1, 1);
-        jogos.add(jogo1);
 
-        Jogo jogo2 = new Jogo("Libertadores", "Brasil");
-        jogo2.setTimes(0, "Bahia");
-        jogo2.setTimes(1, "Vitória");
-        jogo2.setPlacar(0, 1);
-        jogo2.setPlacar(1, 2);
-        jogos.add(jogo2);
-
-        Jogo jogo3 = new Jogo("Libertadores", "Brasil");
-        jogo3.setTimes(0, "Flamengo");
-        jogo3.setTimes(1, "Atlético-MG");
-        jogo3.setPlacar(0, 3);
-        jogo3.setPlacar(1, 0);
-        jogos.add(jogo3);
-
-        Jogo jogo4 = new Jogo("Libertadores", "Brasil");
-        jogo4.setTimes(0, "Corinthians");
-        jogo4.setTimes(1, "Santos");
-        jogo4.setPlacar(0, 0);
-        jogo4.setPlacar(1, 0);
-        jogos.add(jogo4);
-    }
-    public void testeGerarBolao(){
-        ArrayList<Aposta> apostas = new ArrayList<>();
-        apostas.add(new Aposta(jogos.get(0), "Grêmio"));
-        apostas.get(0).setPrevisaoPlacar(0, 2);
-        apostas.get(0).setPrevisaoPlacar(1, 1);
-
-        apostas.add(new Aposta(jogos.get(1), "Vitória"));
-        apostas.get(1).setPrevisaoPlacar(0, 2);
-        apostas.get(1).setPrevisaoPlacar(1, 1);
-
-        apostas.add(new Aposta(jogos.get(2), "Flamengo"));
-        apostas.get(1).setPrevisaoPlacar(0, 2);
-        apostas.get(1).setPrevisaoPlacar(1, 1);
-
-        boloes.add(new Bolao(5));
-
-        boloes.get(boloes.size() - 1).setApostas(apostas);
-        boloes.get(boloes.size() - 1).setApostadores(apostadores);
-        for (Apostador apostador : boloes.get(boloes.size() - 1).getApostadores()){
-            apostador.getBoloes().add(boloes.get(boloes.size() - 1));
-        }
-    }
+//    public void testeGerarJogos(){
+//        Jogo jogo1 = new Jogo("Gauchão", "Brasil");
+//        jogo1.setTimes(0, "Grêmio");
+//        jogo1.setTimes(1, "Inter");
+//        jogo1.setPlacar(0, 2);
+//        jogo1.setPlacar(1, 1);
+//        jogos.add(jogo1);
+//
+//        Jogo jogo2 = new Jogo("Libertadores", "Brasil");
+//        jogo2.setTimes(0, "Bahia");
+//        jogo2.setTimes(1, "Vitória");
+//        jogo2.setPlacar(0, 1);
+//        jogo2.setPlacar(1, 2);
+//        jogos.add(jogo2);
+//
+//        Jogo jogo3 = new Jogo("Libertadores", "Brasil");
+//        jogo3.setTimes(0, "Flamengo");
+//        jogo3.setTimes(1, "Atlético-MG");
+//        jogo3.setPlacar(0, 3);
+//        jogo3.setPlacar(1, 0);
+//        jogos.add(jogo3);
+//
+//        Jogo jogo4 = new Jogo("Libertadores", "Brasil");
+//        jogo4.setTimes(0, "Corinthians");
+//        jogo4.setTimes(1, "Santos");
+//        jogo4.setPlacar(0, 0);
+//        jogo4.setPlacar(1, 0);
+//        jogos.add(jogo4);
+//    }
+//    public void testeGerarBolao(){
+//        ArrayList<Aposta> apostas = new ArrayList<>();
+//        apostas.add(new Aposta(jogos.get(0), "Grêmio"));
+//        apostas.get(0).setPrevisaoPlacar(0, 2);
+//        apostas.get(0).setPrevisaoPlacar(1, 1);
+//
+//        apostas.add(new Aposta(jogos.get(1), "Vitória"));
+//        apostas.get(1).setPrevisaoPlacar(0, 2);
+//        apostas.get(1).setPrevisaoPlacar(1, 1);
+//
+//        apostas.add(new Aposta(jogos.get(2), "Flamengo"));
+//        apostas.get(1).setPrevisaoPlacar(0, 2);
+//        apostas.get(1).setPrevisaoPlacar(1, 1);
+//
+//        boloes.add(new Bolao(5));
+//
+//        boloes.get(boloes.size() - 1).setApostas(apostas);
+//        boloes.get(boloes.size() - 1).setApostadores(apostadores);
+//        for (Apostador apostador : boloes.get(boloes.size() - 1).getApostadores()){
+//            apostador.getBoloes().add(boloes.get(boloes.size() - 1));
+//        }
+//    }
+//}
 }
+
 
