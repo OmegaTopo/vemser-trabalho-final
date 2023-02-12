@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class TesteKleiman {
+public class TesteKleiman{
     //    public ArrayList<Jogo> criarJogos(){
 //        ArrayList<Jogo> jogos = new ArrayList<>();
 //
@@ -134,10 +134,16 @@ public class TesteKleiman {
 
         bolaoK.setApostas(apostasK);
         bolaoK.setApostadores(apostadores);
+        for (Apostador apostador : bolaoK.getApostadores()){
+            apostador.getBoloes().add(bolaoK);
+        }
         bolaoK.distribuirPremio();
 //        System.out.println(bolaoK.getResultado()); //OK
 
-        System.out.println(kleiman.toString());
-    }
 
+
+        System.out.println(kleiman.toString());
+        System.out.println(miguel.toString());
+
+    }
 }
