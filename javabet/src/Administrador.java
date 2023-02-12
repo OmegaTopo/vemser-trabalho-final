@@ -35,8 +35,3 @@ public class Administrador extends Usuario {
 //    public static ArrayList<String> mostraPaises() {
 //        return jogos.forEach(jogo -> jogo.getPais());
 //    }
-<<<<<<< HEAD
-}
-=======
-//}
->>>>>>> 3201b735c4a8b66330374c67d9b2253d15c02678

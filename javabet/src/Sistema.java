@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Sistema {
     private Scanner scanner = new Scanner(System.in);
     private ArrayList<Apostador> apostadores = new ArrayList<>();
-    private ArrayList<Administrador> administradores = new ArrayList<>();
+    private AdministradorCrud administradorCrud = new AdministradorCrud();
     private ArrayList<Jogo> jogos = new ArrayList<>();
     private ArrayList<Bolao> boloes = new ArrayList<>();
     private Usuario usuarioAtivo;
@@ -166,7 +166,7 @@ public class Sistema {
                 return true;
             }
         }
-        for (Administrador administrador : administradores) {
+        for (Administrador administrador : administradorCrud.getAdministradores()) {
             if (administrador.getEmail().equals(email) && administrador.getSenha().equals(senha)) {
                 usuarioAtivo = administrador;
                 return true;
@@ -190,7 +190,7 @@ public class Sistema {
             opcao = scanner.nextLine();
             switch (opcao) {
                 case "CADM":
-                    cadastroDeAdm();
+                    administradorCrud.cadastroDeAdm();
                     break;
                 case "1":
                     cadastroDeApostador();
@@ -263,7 +263,7 @@ public class Sistema {
                     crudApostador();
                     break;
                 case "2":
-                    crudAdministrador();
+                    administradorCrud.crudAdministrador();
                     break;
                 case "3":
                     crudAposta();
@@ -387,112 +387,6 @@ public class Sistema {
         }
     }
 
-    public void crudAdministrador() {
-        System.out.println("\n\t----CRUD ADMINISTRADOR----");
-        String opcao = "";
-        while (!opcao.equals("0")) {
-            System.out.println("\t1 - Cadastrar Administrador");
-            System.out.println("\t2 - Listar Administradores");
-            System.out.println("\t3 - Atualizar Administrador");
-            System.out.println("\t4 - Deletar Administrador");
-            System.out.println("\t0 - Sair");
-            System.out.print("\tEscolha uma opção: ");
-            opcao = scanner.nextLine();
-            switch (opcao) {
-                case "1":
-                    cadastroDeAdm();
-                    break;
-                case "2":
-                    listarAdm();
-                    break;
-                case "3":
-                    atualizarAdm();
-                    break;
-                case "4":
-                    removerAdm();
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
-    //    Métodos relacionados ao Administrador
-    public void cadastroDeAdm() {
-        try {
-            System.out.println("\n\tCADASTRO DE ADMINISTRADOR\n---------------------");
-//        E-mail
-            System.out.print("\tE-mail: ");
-            String email = scanner.nextLine();
-//        Senha
-            System.out.print("\tSenha: ");
-            String senha = scanner.nextLine();
-//        Fim do cadastro
-            administradores.add(new Administrador(email, senha));
-        } catch (Exception e) {
-            System.out.println("\n----ERRO AO REALIZAR O CADASTRO----\n");
-        }
-    }
-
-    public void listarAdm() {
-        System.out.println("\n\t\tLISTA DE ADMINISTRADORES\n\t\t---------------------");
-        Administrador administrador;
-        for (int i = 0; i < administradores.size(); i++) {
-            administrador = administradores.get(i);
-            System.out.println("\t\t\t" + (i + 1) + ". " +
-                    administradores.get(i).getEmail());
-        }
-    }
-
-    public void atualizarAdm() {
-        System.out.println("\n\tATUALIZAÇÃO DE ADMINISTRADOR\n\t------------------------");
-        System.out.print("\tDigite o email do administrador: ");
-        String email = scanner.nextLine();
-        boolean encontrado = false;
-        for (Administrador administrador : administradores) {
-            if (administrador.getEmail().equals(email)) {
-                encontrado = true;
-                System.out.println("\tO que deseja alterar?");
-                System.out.println("\t1 - E-mail");
-                System.out.println("\t2 - Senha");
-                System.out.print("\tDigite a opção desejada: ");
-                String opcao = scanner.nextLine();
-                switch (opcao) {
-                    case "1":
-                        System.out.print("\tDigite o novo e-mail: ");
-                        administrador.setEmail(scanner.nextLine());
-                        break;
-                    case "2":
-                        System.out.print("\tDigite a nova senha: ");
-                        administrador.setSenha(scanner.nextLine());
-                        break;
-                }
-                break;
-            }
-        }
-        if (!encontrado) {
-            System.out.println("\n\t----APOSTADOR NÃO ENCONTRADO----");
-        }
-    }
-
-    public void removerAdm() {
-        System.out.println("\n\tREMOÇÃO DE ADMINISTRADOR\n---------------------");
-        System.out.println("\n\tATUALIZAÇÃO DE ADMINISTRADOR\n\t------------------------");
-        System.out.print("\tDigite o email do administrador: ");
-        String email = scanner.nextLine();
-        boolean encontrado = false;
-        for (Administrador administrador : administradores) {
-            if (administrador.getEmail().equals(email)) {
-                encontrado = true;
-                administradores.remove(administrador);
-                break;
-            }
-        }
-        if (!encontrado) {
-            System.out.println("\n\t----APOSTADOR NÃO ENCONTRADO----");
-        }
-    }
-
     public void crudBolao() {
         System.out.println("\n\t----CRUD BOLAO----");
         String opcao = "";
@@ -611,10 +505,10 @@ public class Sistema {
 
     //    Métodos relacionados aos testes e acessíveis no menu do ADM
     public void testeInicializar() {
-        this.administradores.add(new Administrador("adm@adm.com", "adm"));
+        this.administradorCrud.getAdministradores().add(new Administrador("adm@adm.com", "adm"));
         this.testeGerarApostadores();
-//        this.testeGerarJogos();
-//        this.testeGerarBolao();
+        this.testeGerarJogos();
+        this.testeGerarBolao();
     }
 
     public void testeGerarApostadores() {
@@ -623,58 +517,50 @@ public class Sistema {
         apostadores.add(new Apostador("Gabriel Kleiman", "09", "02", 1999, "74185296351", "kleiman@mrjavabet.com", "kleiman"));
     }
 
-//    public void testeGerarJogos(){
-//        Jogo jogo1 = new Jogo("Gauchão", "Brasil");
-//        jogo1.setTimes(0, "Grêmio");
-//        jogo1.setTimes(1, "Inter");
-//        jogo1.setPlacar(0, 2);
-//        jogo1.setPlacar(1, 1);
-//        jogos.add(jogo1);
-//
-//        Jogo jogo2 = new Jogo("Libertadores", "Brasil");
-//        jogo2.setTimes(0, "Bahia");
-//        jogo2.setTimes(1, "Vitória");
-//        jogo2.setPlacar(0, 1);
-//        jogo2.setPlacar(1, 2);
-//        jogos.add(jogo2);
-//
-//        Jogo jogo3 = new Jogo("Libertadores", "Brasil");
-//        jogo3.setTimes(0, "Flamengo");
-//        jogo3.setTimes(1, "Atlético-MG");
-//        jogo3.setPlacar(0, 3);
-//        jogo3.setPlacar(1, 0);
-//        jogos.add(jogo3);
-//
-//        Jogo jogo4 = new Jogo("Libertadores", "Brasil");
-//        jogo4.setTimes(0, "Corinthians");
-//        jogo4.setTimes(1, "Santos");
-//        jogo4.setPlacar(0, 0);
-//        jogo4.setPlacar(1, 0);
-//        jogos.add(jogo4);
-//    }
-//    public void testeGerarBolao(){
-//        ArrayList<Aposta> apostas = new ArrayList<>();
-//        apostas.add(new Aposta(jogos.get(0), "Grêmio"));
-//        apostas.get(0).setPrevisaoPlacar(0, 2);
-//        apostas.get(0).setPrevisaoPlacar(1, 1);
-//
-//        apostas.add(new Aposta(jogos.get(1), "Vitória"));
-//        apostas.get(1).setPrevisaoPlacar(0, 2);
-//        apostas.get(1).setPrevisaoPlacar(1, 1);
-//
-//        apostas.add(new Aposta(jogos.get(2), "Flamengo"));
-//        apostas.get(1).setPrevisaoPlacar(0, 2);
-//        apostas.get(1).setPrevisaoPlacar(1, 1);
-//
-//        boloes.add(new Bolao(5));
-//
-//        boloes.get(boloes.size() - 1).setApostas(apostas);
-//        boloes.get(boloes.size() - 1).setApostadores(apostadores);
-//        for (Apostador apostador : boloes.get(boloes.size() - 1).getApostadores()){
-//            apostador.getBoloes().add(boloes.get(boloes.size() - 1));
-//        }
-//    }
-//}
+    public void testeGerarJogos() {
+        Jogo jogo1 = new Jogo("Gauchão", "Brasil", "Grêmio", "Inter");
+        jogo1.setPlacar(0, 2);
+        jogo1.setPlacar(1, 1);
+        jogos.add(jogo1);
+
+        Jogo jogo2 = new Jogo("Libertadores", "Brasil", "Bahia", "Vitória");
+        jogo2.setPlacar(0, 1);
+        jogo2.setPlacar(1, 2);
+        jogos.add(jogo2);
+
+        Jogo jogo3 = new Jogo("Libertadores", "Brasil", "Flamengo", "Atlético-MG");
+        jogo3.setPlacar(0, 3);
+        jogo3.setPlacar(1, 0);
+        jogos.add(jogo3);
+
+        Jogo jogo4 = new Jogo("Libertadores", "Brasil", "Corinthians", "Santos");
+        jogo4.setPlacar(0, 0);
+        jogo4.setPlacar(1, 0);
+        jogos.add(jogo4);
+    }
+
+    public void testeGerarBolao() {
+        ArrayList<Aposta> apostas = new ArrayList<>();
+        apostas.add(new Aposta(jogos.get(0), "Grêmio"));
+        apostas.get(0).setPrevisaoPlacar(0, 2);
+        apostas.get(0).setPrevisaoPlacar(1, 1);
+
+        apostas.add(new Aposta(jogos.get(1), "Vitória"));
+        apostas.get(1).setPrevisaoPlacar(0, 2);
+        apostas.get(1).setPrevisaoPlacar(1, 1);
+
+        apostas.add(new Aposta(jogos.get(2), "Flamengo"));
+        apostas.get(1).setPrevisaoPlacar(0, 2);
+        apostas.get(1).setPrevisaoPlacar(1, 1);
+
+        boloes.add(new Bolao(5));
+
+        boloes.get(boloes.size() - 1).setApostas(apostas);
+        boloes.get(boloes.size() - 1).setApostadores(apostadores);
+        for (Apostador apostador : boloes.get(boloes.size() - 1).getApostadores()) {
+            apostador.getBoloes().add(boloes.get(boloes.size() - 1));
+        }
+    }
 }
 
 
