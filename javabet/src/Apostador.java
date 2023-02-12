@@ -75,13 +75,13 @@ public class Apostador extends Usuario implements Imprimir {
         System.out.println(this.toString());
     }
 
-    public boolean realizarAposta(Jogo jogo) {
-        if (pontos > 1) {
-            Administrador.getJogos().stream()
-                    .filter(jogo1 -> jogo.getPais())
-        }
-        return false;
-    }
+//    public boolean realizarAposta(Jogo jogo) {
+//        if (pontos > 1) {
+//            Administrador.getJogos().stream()
+//                    .filter(jogo1 -> jogo.getPais());
+//        }
+//        return false;
+//    }
 
     public boolean comprarCotaBolao() {
         return false;

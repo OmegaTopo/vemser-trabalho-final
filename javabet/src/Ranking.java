@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Ranking implements Imprimir{
+public class :Ranking implements Imprimir{
 
 
     private List<Apostador> apostadores = new ArrayList<>();
@@ -25,6 +25,5 @@ public class Ranking implements Imprimir{
 
     @Override
     public void imprimir() {
-
     }
 }
