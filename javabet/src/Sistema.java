@@ -113,7 +113,6 @@ public class Sistema {
 
     }
 
-
     public void apostadorRealizarAposta() {
         if (!(usuarioAtivo instanceof Apostador)) {
             System.out.println("\n\t----USUÁRIO INVÁLIDO PARA ESTE MÉTODO----");
@@ -159,23 +158,6 @@ public class Sistema {
         System.out.println("\n\t----APOSTA REALIZADA COM SUCESSO----");
     }
 
-    //    Métodos relacionados ao Administrador
-    public void cadastroDeAdministrador() {
-        try {
-            System.out.println("\n\tCADASTRO DE ADMINISTRADOR\n---------------------");
-//        E-mail
-            System.out.print("\tE-mail: ");
-            String email = scanner.nextLine();
-//        Senha
-            System.out.print("\tSenha: ");
-            String senha = scanner.nextLine();
-//        Fim do cadastro
-            administradores.add(new Administrador(email, senha));
-        } catch (Exception e) {
-            System.out.println("\n----ERRO AO REALIZAR O CADASTRO----\n");
-        }
-    }
-
     //    Métodos gerais de funcionamento do sistema
     public boolean verificarLogin(String email, String senha) {
         for (Apostador apostador : apostadores) {
@@ -208,7 +190,7 @@ public class Sistema {
             opcao = scanner.nextLine();
             switch (opcao) {
                 case "CADM":
-                    cadastroDeAdministrador();
+                    cadastroDeAdm();
                     break;
                 case "1":
                     cadastroDeApostador();
@@ -418,16 +400,96 @@ public class Sistema {
             opcao = scanner.nextLine();
             switch (opcao) {
                 case "1":
+                    cadastroDeAdm();
                     break;
                 case "2":
+                    listarAdm();
                     break;
                 case "3":
+                    atualizarAdm();
                     break;
                 case "4":
+                    removerAdm();
                     break;
                 default:
                     break;
             }
+        }
+    }
+
+    //    Métodos relacionados ao Administrador
+    public void cadastroDeAdm() {
+        try {
+            System.out.println("\n\tCADASTRO DE ADMINISTRADOR\n---------------------");
+//        E-mail
+            System.out.print("\tE-mail: ");
+            String email = scanner.nextLine();
+//        Senha
+            System.out.print("\tSenha: ");
+            String senha = scanner.nextLine();
+//        Fim do cadastro
+            administradores.add(new Administrador(email, senha));
+        } catch (Exception e) {
+            System.out.println("\n----ERRO AO REALIZAR O CADASTRO----\n");
+        }
+    }
+
+    public void listarAdm() {
+        System.out.println("\n\t\tLISTA DE ADMINISTRADORES\n\t\t---------------------");
+        Administrador administrador;
+        for (int i = 0; i < administradores.size(); i++) {
+            administrador = administradores.get(i);
+            System.out.println("\t\t\t" + (i + 1) + ". " +
+                    administradores.get(i).getEmail());
+        }
+    }
+
+    public void atualizarAdm() {
+        System.out.println("\n\tATUALIZAÇÃO DE ADMINISTRADOR\n\t------------------------");
+        System.out.print("\tDigite o email do administrador: ");
+        String email = scanner.nextLine();
+        boolean encontrado = false;
+        for (Administrador administrador : administradores) {
+            if (administrador.getEmail().equals(email)) {
+                encontrado = true;
+                System.out.println("\tO que deseja alterar?");
+                System.out.println("\t1 - E-mail");
+                System.out.println("\t2 - Senha");
+                System.out.print("\tDigite a opção desejada: ");
+                String opcao = scanner.nextLine();
+                switch (opcao) {
+                    case "1":
+                        System.out.print("\tDigite o novo e-mail: ");
+                        administrador.setEmail(scanner.nextLine());
+                        break;
+                    case "2":
+                        System.out.print("\tDigite a nova senha: ");
+                        administrador.setSenha(scanner.nextLine());
+                        break;
+                }
+                break;
+            }
+        }
+        if (!encontrado) {
+            System.out.println("\n\t----APOSTADOR NÃO ENCONTRADO----");
+        }
+    }
+
+    public void removerAdm() {
+        System.out.println("\n\tREMOÇÃO DE ADMINISTRADOR\n---------------------");
+        System.out.println("\n\tATUALIZAÇÃO DE ADMINISTRADOR\n\t------------------------");
+        System.out.print("\tDigite o email do administrador: ");
+        String email = scanner.nextLine();
+        boolean encontrado = false;
+        for (Administrador administrador : administradores) {
+            if (administrador.getEmail().equals(email)) {
+                encontrado = true;
+                administradores.remove(administrador);
+                break;
+            }
+        }
+        if (!encontrado) {
+            System.out.println("\n\t----APOSTADOR NÃO ENCONTRADO----");
         }
     }
 
@@ -499,7 +561,7 @@ public class Sistema {
         }
     }
 
-    public void gerarJogo(){
+    public void gerarJogo() {
         System.out.println(" Digite o campeonato do jogo: ");
         String campeonato = scanner.nextLine();
         System.out.println(" Digite o país do jogo: ");
@@ -527,10 +589,10 @@ public class Sistema {
         jogos.get(index).setPais(pais);
         System.out.println(" Digite o primeiro time: ");
         String time1 = scanner.nextLine();
-        jogos.get(index).setTimes(0,time1);
+        jogos.get(index).setTimes(0, time1);
         System.out.println(" Digite o segundo time: ");
         String time2 = scanner.nextLine();
-        jogos.get(index).setTimes(1,time2);
+        jogos.get(index).setTimes(1, time2);
     }
 
     public void removerJogo() {
