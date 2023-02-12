@@ -271,32 +271,46 @@ public class Sistema {
         String opcao = "";
         while (!opcao.equals("0")) {
             System.out.println("\n\tMENU ADMINISTRADOR\n---------------------");
-            System.out.println("\t1 - GERAR APOSTADORES TESTE");
-            System.out.println("\t2 - GERAR JOGOS TESTE");
-            System.out.println("\t3 - GERAR BOLÃO TESTE");
-            System.out.println("\t4 - Cadastrar bolão");
-            System.out.println("\t5 - Finalizar Jogo");
+            System.out.println("\t1 - CRUD Apostador");
+            System.out.println("\t2 - CRUD Administrador");
+            System.out.println("\t3 - CRUD Aposta");
+            System.out.println("\t4 - CRUD Bolão");
+            System.out.println("\t5 - CRUD Jogo");
+            System.out.println("\t6 - GERAR APOSTADORES TESTE");
+            System.out.println("\t7 - GERAR JOGOS TESTE");
+            System.out.println("\t8 - GERAR BOLÃO TESTE");
             System.out.println("\t0 - Sair");
             System.out.print("\tEscolha uma opção: ");
             opcao = scanner.nextLine();
             switch (opcao) {
                 case "1":
+                    crudApostador();
+                    break;
+                case "2":
+                    crudAdministrador();
+                    break;
+                case "3":
+                    crudAposta();
+                    break;
+                case "4":
+                    crudBolao();
+                    break;
+                case "5":
+                    crudJogo();
+                    break;
+                case "6":
                     testeGerarApostadores();
                     System.out.println("\n\t----APOSTADORES TESTE GERADOS----");
                     break;
-                case "2":
+                case "7":
                     testeGerarJogos();
                     System.out.println("\n\t----JOGOS TESTE GERADOS----");
                     break;
-                case "3":
+                case "8":
                     testeGerarBolao();
                     System.out.println("\n\t----BOLÃO TESTE GERADOS----");
                     break;
-                case "4":
-                    System.out.println("\n\tVerificar resultado de bolões");
-                    break;
                 case "0":
-                    System.out.println("\n\tSaindo...");
                     break;
                 default:
                     System.out.println("\n\tOpção inválida");
@@ -322,6 +336,7 @@ public class Sistema {
                     apostadorRealizarAposta();
                     break;
                 case "2":
+                    //Listar bolões
                     System.out.println("\nComprar cota de bolão");
                     break;
                 case "3":
@@ -339,7 +354,136 @@ public class Sistema {
             }
         }
     }
-//    Métodos relacionados aos testes e acessíveis no menu do ADM
+//    CRUD MENU
+    public void crudApostador(){
+        System.out.println("\n\t----CRUD APOSTADOR----");
+        String opcao = "";
+        while (!opcao.equals("0")) {
+            System.out.println("\t1 - Cadastrar Apostador");
+            System.out.println("\t2 - Listar Apostadores");
+            System.out.println("\t3 - Atualizar Apostador");
+            System.out.println("\t4 - Deletar Apostador");
+            System.out.println("\t0 - Sair");
+            System.out.print("\tEscolha uma opção: ");
+            opcao = scanner.nextLine();
+            switch (opcao) {
+                case "1":
+                    cadastroDeApostador();
+                    break;
+                case "2":
+                    listarApostadores();
+                    break;
+                case "3":
+                    break;
+                case "4":
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    public void crudAposta(){
+        System.out.println("\n\t----CRUD APOSTA----");
+        String opcao = "";
+        while (!opcao.equals("0")) {
+            System.out.println("\t1 - Cadastrar Aposta");
+            System.out.println("\t2 - Listar Apostas");
+            System.out.println("\t3 - Atualizar Aposta");
+            System.out.println("\t4 - Deletar Aposta");
+            System.out.println("\t0 - Sair");
+            System.out.print("\tEscolha uma opção: ");
+            opcao = scanner.nextLine();
+            switch (opcao) {
+                case "1":
+                    break;
+                case "2":
+                    break;
+                case "3":
+                    break;
+                case "4":
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    public void crudAdministrador() {
+        System.out.println("\n\t----CRUD ADMINISTRADOR----");
+        String opcao = "";
+        while (!opcao.equals("0")) {
+            System.out.println("\t1 - Cadastrar Administrador");
+            System.out.println("\t2 - Listar Administradores");
+            System.out.println("\t3 - Atualizar Administrador");
+            System.out.println("\t4 - Deletar Administrador");
+            System.out.println("\t0 - Sair");
+            System.out.print("\tEscolha uma opção: ");
+            opcao = scanner.nextLine();
+            switch (opcao) {
+                case "1":
+                    break;
+                case "2":
+                    break;
+                case "3":
+                    break;
+                case "4":
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    public void crudBolao(){
+        System.out.println("\n\t----CRUD BOLAO----");
+        String opcao = "";
+        while (!opcao.equals("0")) {
+            System.out.println("\t1 - Cadastrar Bolão");
+            System.out.println("\t2 - Listar Bolões");
+            System.out.println("\t3 - Atualizar Bolão");
+            System.out.println("\t4 - Deletar Bolão");
+            System.out.println("\t0 - Sair");
+            System.out.print("\tEscolha uma opção: ");
+            opcao = scanner.nextLine();
+            switch (opcao) {
+                case "1":
+                    break;
+                case "2":
+                    break;
+                case "3":
+                    break;
+                case "4":
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    public void crudJogo(){
+        System.out.println("\n\t----CRUD JOGO----");
+        String opcao = "";
+        while (!opcao.equals("0")) {
+            System.out.println("\t1 - Cadastrar Jogo");
+            System.out.println("\t2 - Listar Jogos");
+            System.out.println("\t3 - Atualizar Jogo");
+            System.out.println("\t4 - Deletar Jogo");
+            System.out.println("\t0 - Sair");
+            System.out.print("\tEscolha uma opção: ");
+            opcao = scanner.nextLine();
+            switch (opcao) {
+                case "1":
+                    break;
+                case "2":
+                    listarJogos();
+                    break;
+                case "3":
+                    break;
+                case "4":
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    //    Métodos relacionados aos testes e acessíveis no menu do ADM
     public void testeInicializar(){
         this.administradores.add(new Administrador("adm@adm.com", "adm"));
         this.testeGerarApostadores();
