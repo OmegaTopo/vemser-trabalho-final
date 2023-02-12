@@ -572,7 +572,7 @@ public class Sistema {
 //}
 
     // comentário aleatório teste do Gabriel Schramm
-=======
+
     public void testeGerarJogos() {
         Jogo jogo1 = new Jogo("Gauchão", "Brasil", "Grêmio", "Inter");
         jogo1.setPlacar(0, 2);
@@ -617,7 +617,6 @@ public class Sistema {
             apostador.getBoloes().add(boloes.get(boloes.size() - 1));
         }
     }
->>>>>>> 43683e1e22b0c1346863fda3680b7d35cef50bef
 }
 
 
