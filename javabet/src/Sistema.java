@@ -501,8 +501,6 @@ public class Sistema {
             System.out.println("\n\t----JOGO NÃO ENCONTRADO----");
         }
     }
-
-
     //    Métodos relacionados aos testes e acessíveis no menu do ADM
     public void testeInicializar() {
         this.administradorCrud.getAdministradores().add(new Administrador("adm@adm.com", "adm"));
