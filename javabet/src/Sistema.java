@@ -517,6 +517,62 @@ public class Sistema {
         apostadores.add(new Apostador("Gabriel Kleiman", "09", "02", 1999, "74185296351", "kleiman@mrjavabet.com", "kleiman"));
     }
 
+<<<<<<< HEAD
+//    public void testeGerarJogos(){
+//        Jogo jogo1 = new Jogo("Gauchão", "Brasil");
+//        jogo1.setTimes(0, "Grêmio");
+//        jogo1.setTimes(1, "Inter");
+//        jogo1.setPlacar(0, 2);
+//        jogo1.setPlacar(1, 1);
+//        jogos.add(jogo1);
+//
+//        Jogo jogo2 = new Jogo("Libertadores", "Brasil");
+//        jogo2.setTimes(0, "Bahia");
+//        jogo2.setTimes(1, "Vitória");
+//        jogo2.setPlacar(0, 1);
+//        jogo2.setPlacar(1, 2);
+//        jogos.add(jogo2);
+//
+//        Jogo jogo3 = new Jogo("Libertadores", "Brasil");
+//        jogo3.setTimes(0, "Flamengo");
+//        jogo3.setTimes(1, "Atlético-MG");
+//        jogo3.setPlacar(0, 3);
+//        jogo3.setPlacar(1, 0);
+//        jogos.add(jogo3);
+//
+//        Jogo jogo4 = new Jogo("Libertadores", "Brasil");
+//        jogo4.setTimes(0, "Corinthians");
+//        jogo4.setTimes(1, "Santos");
+//        jogo4.setPlacar(0, 0);
+//        jogo4.setPlacar(1, 0);
+//        jogos.add(jogo4);
+//    }
+//    public void testeGerarBolao(){
+//        ArrayList<Aposta> apostas = new ArrayList<>();
+//        apostas.add(new Aposta(jogos.get(0), "Grêmio"));
+//        apostas.get(0).setPrevisaoPlacar(0, 2);
+//        apostas.get(0).setPrevisaoPlacar(1, 1);
+//
+//        apostas.add(new Aposta(jogos.get(1), "Vitória"));
+//        apostas.get(1).setPrevisaoPlacar(0, 2);
+//        apostas.get(1).setPrevisaoPlacar(1, 1);
+//
+//        apostas.add(new Aposta(jogos.get(2), "Flamengo"));
+//        apostas.get(1).setPrevisaoPlacar(0, 2);
+//        apostas.get(1).setPrevisaoPlacar(1, 1);
+//
+//        boloes.add(new Bolao(5));
+//
+//        boloes.get(boloes.size() - 1).setApostas(apostas);
+//        boloes.get(boloes.size() - 1).setApostadores(apostadores);
+//        for (Apostador apostador : boloes.get(boloes.size() - 1).getApostadores()){
+//            apostador.getBoloes().add(boloes.get(boloes.size() - 1));
+//        }
+//    }
+//}
+
+    // comentário aleatório teste do Gabriel Schramm
+=======
     public void testeGerarJogos() {
         Jogo jogo1 = new Jogo("Gauchão", "Brasil", "Grêmio", "Inter");
         jogo1.setPlacar(0, 2);
@@ -561,6 +617,7 @@ public class Sistema {
             apostador.getBoloes().add(boloes.get(boloes.size() - 1));
         }
     }
+>>>>>>> 43683e1e22b0c1346863fda3680b7d35cef50bef
 }
 
 // Comentário teste do Miguel

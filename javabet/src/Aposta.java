@@ -91,7 +91,7 @@ public class Aposta implements Premio {
             } else if (this.getJogo().getPlacar()[0] < this.getJogo().getPlacar()[1]) {
                 timeVencedor = this.getJogo().getTimes()[1];
             }
-            if (this.getPrevisaoTime() == timeVencedor){
+            if (Objects.equals(this.getPrevisaoTime(), timeVencedor)){
                 return PONTOS_TIME;
             }
         }
