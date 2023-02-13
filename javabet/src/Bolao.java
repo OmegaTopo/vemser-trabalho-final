@@ -117,10 +117,9 @@ public class Bolao implements Premio {
 
     @Override
     public String toString() {
-        return "Bolao\n" +
-                "Apostas: " + apostas +
+        return "Bolao | Apostas:\n" + apostas +
                 "\nFinalizado? " + finalizado +
-                '}';
+                '\n';
     }
 
     @Override
