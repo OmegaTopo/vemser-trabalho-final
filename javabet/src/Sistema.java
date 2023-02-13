@@ -756,12 +756,9 @@ public class Sistema {
     }
 
     public void mostrarRanking(){
-        int i=1;
-        for(Apostador apostador : ranking.getPontuacaoGeral()){
-            System.out.println("\t\t"+i+" "+apostador.getNome() +" -- \t"+ apostador.getPontos()+" Pontos ");
-            i++;
+            ranking.imprimir();
         }
-    }
+
 
     public void depositar(){
         Apostador apostador = (Apostador) usuarioAtivo;
