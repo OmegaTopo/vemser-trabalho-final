@@ -18,9 +18,11 @@ public class Ranking implements Imprimir{
         return getPontuacaoGeral();
     }
 
-    public ArrayList<Jogo> getPontuacaoCampeonato(){
-        for ()
-        System.out.println(listaCampeonato);
+    public ArrayList<Jogo> getPontuacaoCampeonato() {
+        for (Jogo jogo : jogos) {
+            Jogo listaCampeonato = new Jogo();
+            System.out.println(listaCampeonato);
+        }
         return getPontuacaoCampeonato();
     }
 
