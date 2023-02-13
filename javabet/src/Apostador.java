@@ -85,7 +85,7 @@ public class Apostador extends Usuario implements Imprimir, Comparable<Apostador
 
     public double trocarPremio(int pontosTroca) {
         if ((pontosTroca <= getPontos()) && (pontosTroca > 0)) {
-            double valor = (double) getPontos() / TROCA_PONTOS_POR_REAL;
+            double valor = (double) pontosTroca / TROCA_PONTOS_POR_REAL;
             setPontos(getPontos() - pontosTroca);
             return valor;
         } else {
