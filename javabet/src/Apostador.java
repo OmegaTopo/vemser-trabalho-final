@@ -77,7 +77,7 @@ public class Apostador extends Usuario implements Imprimir, Comparable<Apostador
 
     public boolean comprarCotaBolao(Bolao bolao) {
         boloes.add(bolao);
-        bolao.getApostadores().add(this)
+        bolao.getApostadores().add(this);
         return true;
     }
 
