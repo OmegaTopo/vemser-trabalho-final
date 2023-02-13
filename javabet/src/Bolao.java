@@ -116,9 +116,18 @@ public class Bolao implements Premio {
     }
 
     @Override
+    public String toString() {
+        return "Bolao\n" +
+                "Apostas: " + apostas +
+                "\nFinalizado? " + finalizado +
+                '}';
+    }
+
+    @Override
     public int getResultado() {
         return this.getApostas().stream()
                 .mapToInt(Aposta::getResultado)
                 .sum();
+
     }
 }

@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Apostador extends Usuario implements Imprimir , Comparable<Apostador> {
+public class Apostador extends Usuario implements Imprimir, Comparable<Apostador> {
 
     private int pontos;
     private ArrayList<Aposta> apostas;
@@ -16,15 +16,18 @@ public class Apostador extends Usuario implements Imprimir , Comparable<Apostado
         this.pontos = 0;
         this.apostas = new ArrayList<>();
         this.boloes = new ArrayList<>();
-        this.dataNascimento = new Date(ano-1900, Integer.parseInt(mes) - 1, Integer.parseInt(dia));
+        this.dataNascimento = new Date(ano - 1900, Integer.parseInt(mes) - 1, Integer.parseInt(dia));
         this.cpf = cpf;
     }
 
     @Override
     public String toString() {
+        String bol;
+        if (boloes.size() > 0) { bol = boloes.toString(); }
+        else { bol = "Nenhum bolão ainda"; }
         return "Nome: " + nome + " | Pontos: " + pontos + "\n" +
                 "Apostas:" + "\n" + apostas + "\n" +
-                "Boloes:" + "\n" + boloes;
+                "Boloes:" + "\n" + bol;
     }
 
     public int getPontos() {
@@ -77,9 +80,9 @@ public class Apostador extends Usuario implements Imprimir , Comparable<Apostado
         return true;
     }
 
-    public double trocarPremio(int pontosTroca){
-        if ((pontosTroca <= getPontos()) && (pontosTroca > 0)){
-            double valor = (double) getPontos()/TROCA_PONTOS_POR_REAL;
+    public double trocarPremio(int pontosTroca) {
+        if ((pontosTroca <= getPontos()) && (pontosTroca > 0)) {
+            double valor = (double) getPontos() / TROCA_PONTOS_POR_REAL;
             setPontos(getPontos() - pontosTroca);
             return valor;
         } else {
@@ -87,16 +90,16 @@ public class Apostador extends Usuario implements Imprimir , Comparable<Apostado
         }
     }
 
-    public boolean comprarPontos(int valor){
+    public boolean comprarPontos(int valor) {
         setPontos(getPontos() + (valor * (int) TROCA_PONTOS_POR_REAL));
         return true;
     }
 
     @Override
     public int compareTo(Apostador o) {
-        if (this.getPontos() > o.getPontos()){
+        if (this.getPontos() > o.getPontos()) {
             return 1;
-        } else if (this.getPontos() < o.getPontos()){
+        } else if (this.getPontos() < o.getPontos()) {
             return -1;
         }
         return 0;
