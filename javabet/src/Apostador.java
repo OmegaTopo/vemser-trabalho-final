@@ -8,6 +8,7 @@ public class Apostador extends Usuario implements Imprimir {
     private String nome;
     private Date dataNascimento;
     private String cpf;
+    final static double TROCA_PONTOS_POR_REAL = 10;
 
     public Apostador(String nome, String dia, String mes, int ano, String cpf, String email, String senha) {
         super(email, senha);
@@ -21,11 +22,7 @@ public class Apostador extends Usuario implements Imprimir {
 
     @Override
     public String toString() {
-        return "Apostador " +
-                "Nome: " + nome + "\n" +
-                "Data de nascimento: " + dataNascimento.toString().formatted("dd", "mm") + "\n" +
-                "CPF: " + cpf + "\n" +
-                "Pontos: " + pontos + "\n" +
+        return "Nome: " + nome + " | Pontos: " + pontos + "\n" +
                 "Apostas:" + "\n" + apostas + "\n" +
                 "Boloes:" + "\n" + boloes;
     }
@@ -75,23 +72,23 @@ public class Apostador extends Usuario implements Imprimir {
         System.out.println(this.toString());
     }
 
-//    public boolean realizarAposta(Jogo jogo) {
-//        if (pontos > 1) {
-//            Administrador.getJogos().stream()
-//                    .filter(jogo1 -> jogo.getPais());
-//        }
-//        return false;
-//    }
-
-    public boolean comprarCotaBolao() {
-        return false;
+    public boolean comprarCotaBolao(Bolao bolao) {
+        boloes.add(bolao);
+        return true;
     }
 
-    public boolean trocarPremio(int pontos){
-        return false;
+    public double trocarPremio(int pontosTroca){
+        if ((pontosTroca <= getPontos()) && (pontosTroca > 0)){
+            double valor = (double) getPontos()/TROCA_PONTOS_POR_REAL;
+            setPontos(getPontos() - pontosTroca);
+            return valor;
+        } else {
+            return 0;
+        }
     }
 
-    public boolean comprarPontos(int reais){
-        return false;
+    public boolean comprarPontos(int valor){
+        setPontos(getPontos() + (valor * (int) TROCA_PONTOS_POR_REAL));
+        return true;
     }
 }
