@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Apostador extends Usuario implements Imprimir {
+public class Apostador extends Usuario implements Imprimir , Comparable<Apostador> {
 
     private int pontos;
     private ArrayList<Aposta> apostas;
@@ -90,5 +90,15 @@ public class Apostador extends Usuario implements Imprimir {
     public boolean comprarPontos(int valor){
         setPontos(getPontos() + (valor * (int) TROCA_PONTOS_POR_REAL));
         return true;
+    }
+
+    @Override
+    public int compareTo(Apostador o) {
+        if (this.getPontos() > o.getPontos()){
+            return 1;
+        } else if (this.getPontos() < o.getPontos()){
+            return -1;
+        }
+        return 0;
     }
 }

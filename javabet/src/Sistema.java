@@ -9,7 +9,7 @@ public class Sistema {
     private ArrayList<Jogo> jogos = new ArrayList<>();
     private ArrayList<Bolao> boloes = new ArrayList<>();
     private Usuario usuarioAtivo;
-    private Ranking ranking = new Ranking();
+    private Ranking ranking = new Ranking(jogos, apostadores);
 
     //  Funções relacionadas ao Apostador
     public void cadastroDeApostador() {
@@ -123,8 +123,7 @@ public class Sistema {
         listarJogos();
         System.out.print("\t\tEscolha o jogo para apostar:");
         String opcao = scanner.nextLine();
-        //Erro aqui
-        int index = 0; // Este padrão é apenas para não dar erro adiante, mas ao tentar transformar a opção em int isso será trocado.
+        int index = 0;
         try {
             index = Integer.parseInt(opcao);
         } catch (Exception e) {
@@ -133,22 +132,11 @@ public class Sistema {
         }
         Jogo jogo = jogos.get(index - 1);
         System.out.println("\tVocê escolheu o jogo: " + jogo.getTimes()[0] + " x " + jogo.getTimes()[1] + " | " + jogo.getCampeonato() + " | " + jogo.getPais());
-        System.out.println("\t\t1. " + jogo.getTimes()[0]);
-        System.out.println("\t\t2. " + jogo.getTimes()[1]);
-        System.out.print("\tEscolha o time para apostar:");
-        opcao = scanner.nextLine();
-        String escolhaTime = "";
-        if (opcao.equals("1")) {
-            escolhaTime = jogo.getTimes()[0];
-        } else if (opcao.equals("2")) {
-            escolhaTime = jogo.getTimes()[1];
-        }
-        System.out.println("\tVocê escolheu o time " + escolhaTime + " para apostar");
-        System.out.println("\tDigite a previsão de placar para " + jogo.getTimes()[0] + ": ");
+        System.out.print("\tDigite a previsão de placar para " + jogo.getTimes()[0] + ": ");
 //        Adicionar tratamento de erro
         int previsaoTime1 = scanner.nextInt();
         scanner.nextLine();
-        System.out.println("\tDigite a previsão de placar para " + jogo.getTimes()[1] + ": ");
+        System.out.print("\tDigite a previsão de placar para " + jogo.getTimes()[1] + ": ");
 //        Adicionar tratamento de erro
         int previsaoTime2 = scanner.nextInt();
         scanner.nextLine();
@@ -156,6 +144,7 @@ public class Sistema {
         novaAposta.setPrevisaoPlacar(0, previsaoTime1);
         novaAposta.setPrevisaoPlacar(1, previsaoTime2);
         apostadores.get(apostadores.indexOf(usuarioAtivo)).getApostas().add(novaAposta);
+        apostadores.get(apostadores.indexOf(usuarioAtivo)).setPontos(apostadores.get(apostadores.indexOf(usuarioAtivo)).getPontos()-2);
         //REALIZAR PRINT DA APOSTA FINAL
         System.out.println("\n\t----APOSTA REALIZADA COM SUCESSO----");
         //Invocar um método para descontar os pontos do apostador
@@ -184,6 +173,7 @@ public class Sistema {
             System.out.println("\n\tMenu Principal\n--------------------");
             System.out.println("\t1. Login");
             System.out.println("\t2. Cadastro de Apostador");
+            System.out.println("\t3. Ranking de Apostadores");
             System.out.println("\t0. Sair");
             System.out.print("\tDigite a opção desejada: ");
             opcao = scanner.nextLine();
@@ -196,6 +186,9 @@ public class Sistema {
                     break;
                 case "2":
                     cadastroDeApostador();
+                    break;
+                case "3":
+                    mostrarRanking();
                     break;
                 case "0":
                     System.out.println("\tSaindo do sistema...");
@@ -291,6 +284,8 @@ public class Sistema {
             System.out.println("\t3 - Verificar resultado de apostas");
             System.out.println("\t4 - Verificar resultado de bolões");
             System.out.println("\t5 - Consultar meus dados");
+            System.out.println("\t6 - Depositar");
+            System.out.println("\t7 - Trocar por prêmio");
             System.out.println("\t0 - Sair");
             System.out.print("\tEscolha uma opção: ");
             opcao = scanner.nextLine();
@@ -302,15 +297,24 @@ public class Sistema {
                 case "2":
                     //Listar bolões
                     System.out.println("\nComprar cota de bolão");
+                    // FAZER
                     break;
                 case "3":
                     System.out.println("\nVerificar resultado de apostas");
+                    // FAZER
                     break;
                 case "4":
                     System.out.println("\nVerificar resultado de bolões");
+                    // FAZER
                     break;
                 case "5":
                     System.out.println(usuarioAtivo.toString());
+                    break;
+                case "6":
+                    depositar();
+                    break;
+                case "7":
+                    trocaPremio();
                     break;
                 case "0":
                     System.out.println("\nSaindo...");
@@ -717,6 +721,35 @@ public class Sistema {
             System.out.println("\n\t----JOGO NÃO ENCONTRADO----");
         }
     }
+
+    public void mostrarRanking(){
+        int i=1;
+        for(Apostador apostador : ranking.getPontuacaoGeral()){
+            System.out.println("\t\t"+i+" "+apostador.getNome() +" -- \t"+ apostador.getPontos()+" Pontos ");
+            i++;
+        }
+    }
+
+    public void depositar(){
+        Apostador apostador = (Apostador) usuarioAtivo;
+        System.out.println(" Digite o valor que deseja depositar: ");
+        int valor = scanner.nextInt();
+        scanner.nextLine();
+        apostador.comprarPontos(valor);
+        System.out.println("\n\tDEPOSITO REALIZADO COM SUCESSO!");
+    }
+
+    public void trocaPremio(){
+        Apostador apostador = (Apostador) usuarioAtivo;
+        System.out.println("Você tem " + apostador.getPontos() + " pontos");
+        System.out.println(" Digite o número de pontos que deseja trocar: ");
+        int valor = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("\n\tTROCA REALIZADA COM SUCESSO!");
+        double resgatado = apostador.trocarPremio(valor);
+        System.out.println("Você resgatou: " + resgatado+" reais");
+        System.out.println("O seu saldo de pontos é: " + apostador.getPontos());
+    }
     //    Métodos relacionados aos testes e acessíveis no menu do ADM
     public void testeInicializar() {
         this.administradorCrud.getAdministradores().add(new Administrador("adm@adm.com", "adm"));
@@ -729,6 +762,9 @@ public class Sistema {
         apostadores.add(new Apostador("Gabriel Schramm", "07", "02", 1998, "12345678998", "moura@mrjavabet.com", "schramm"));
         apostadores.add(new Apostador("Miguel Krasner", "26", "05", 1980, "78945612364", "miguel@mrjavabet.com", "krasner"));
         apostadores.add(new Apostador("Gabriel Kleiman", "09", "02", 1999, "74185296351", "kleiman@mrjavabet.com", "kleiman"));
+        apostadores.get(0).setPontos(200);
+        apostadores.get(1).setPontos(250);
+        apostadores.get(2).setPontos(300);
     }
     public void testeGerarJogos() {
         Jogo jogo1 = new Jogo("Gauchão", "Brasil", "Grêmio", "Inter");
