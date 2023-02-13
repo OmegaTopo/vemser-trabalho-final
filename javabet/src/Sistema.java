@@ -337,6 +337,7 @@ public class Sistema {
                     listarApostadores();
                     break;
                 case "3":
+                    atualizarApostador();
                     break;
                 case "4":
                     listarApostadores();
@@ -387,13 +388,16 @@ public class Sistema {
             opcao = scanner.nextLine();
             switch (opcao) {
                 case "1":
+                    criarBolao();
                     break;
                 case "2":
                     listarBolao();
                     break;
                 case "3":
+                    atualizarBolao();
                     break;
                 case "4":
+                    removerBolao();
                     break;
                 default:
                     break;
@@ -431,7 +435,6 @@ public class Sistema {
         }
     }
 
-
     //    Métodos relacionados aos Jogos
     public void listarJogos() {
         System.out.println("\n\t\tLISTA DE JOGOS\n\t\t---------------------");
@@ -462,6 +465,69 @@ public class Sistema {
         //Listar cada Jogo dentro da Aposta
     }
 
+    public void criarBolao() {
+        if (!(usuarioAtivo instanceof Administrador)) {
+            System.out.println("\n\t----USUÁRIO INVÁLIDO PARA ESTE MÉTODO----");
+            return;
+        }
+        System.out.println("\n\tRealizar Bolão\n--------------------");
+        Bolao bolao = new Bolao (3);
+        for(int i =0; i<3; i++){
+        listarJogos();
+        System.out.print("\t\tEscolha o jogo para apostar:");
+        String opcao = scanner.nextLine();
+        int index = 0; // Este padrão é apenas para não dar erro adiante, mas ao tentar transformar a opção em int isso será trocado.
+        try {
+            index = Integer.parseInt(opcao);
+        } catch (Exception e) {
+            System.out.println("\n\t----JOGO NÃO ENCONTRADO----");
+            return;
+        }
+        Jogo jogo = jogos.get(index - 1);
+        System.out.println("\tVocê escolheu o jogo: " + jogo.getTimes()[0] + " x " + jogo.getTimes()[1] + " | " + jogo.getCampeonato() + " | " + jogo.getPais());
+        System.out.println("\t\t1. " + jogo.getTimes()[0]);
+        System.out.println("\t\t2. " + jogo.getTimes()[1]);
+        System.out.println("\tDigite a previsão de placar para " + jogo.getTimes()[0] + ": ");
+        int previsaoTime1 = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("\tDigite a previsão de placar para " + jogo.getTimes()[1] + ": ");
+        int previsaoTime2 = scanner.nextInt();
+        scanner.nextLine();
+        Aposta novaAposta = new Aposta(jogo, previsaoTime1, previsaoTime2);
+        novaAposta.setPrevisaoPlacar(0, previsaoTime1);
+        novaAposta.setPrevisaoPlacar(1, previsaoTime2);
+        apostadores.get(apostadores.indexOf(usuarioAtivo)).getApostas().add(novaAposta);
+        //REALIZAR PRINT DA APOSTA FINAL
+        System.out.println("\n\t----BOLÃO CRIADO COM SUCESSO----");
+        }
+    }
+
+    public void atualizarBolao(){
+        System.out.println("\n\tATUALIZAÇÃO DE JOGO\n\t------------------------");
+        listarJogos();
+        System.out.print("\tDigite o número do jogo que deseja alterar: ");
+        int index = scanner.nextInt();
+        scanner.nextLine();
+        index--;
+        System.out.println(" Digite o campeonato do jogo: ");
+        String campeonato = scanner.nextLine();
+        jogos.get(index).setCampeonato(campeonato);
+        System.out.println(" Digite o país do jogo: ");
+        String pais = scanner.nextLine();
+        jogos.get(index).setPais(pais);
+        System.out.println(" Digite o primeiro time: ");
+        String time1 = scanner.nextLine();
+        jogos.get(index).setTimes(0, time1);
+        System.out.println(" Digite o segundo time: ");
+        String time2 = scanner.nextLine();
+        jogos.get(index).setTimes(1, time2);
+
+    }
+
+    public void removerBolao() {
+
+    }
+
     public void gerarJogo() {
         System.out.println(" Digite o campeonato do jogo: ");
         String campeonato = scanner.nextLine();
@@ -471,8 +537,7 @@ public class Sistema {
         String time1 = scanner.nextLine();
         System.out.println(" Digite o segundo time: ");
         String time2 = scanner.nextLine();
-        Jogo jogo = new Jogo(campeonato, pais, time1, time2);
-        jogos.add(jogo);
+        jogos.add(new Jogo(campeonato,pais,time1,time2) );
     }
 
     public void atualizarJogo() {
@@ -516,7 +581,6 @@ public class Sistema {
         this.testeGerarJogos();
         this.testeGerarBolao();
     }
-
     public void testeGerarApostadores() {
         apostadores.add(new Apostador("Gabriel Schramm", "07", "02", 1998, "12345678998", "moura@mrjavabet.com", "schramm"));
         apostadores.add(new Apostador("Miguel Krasner", "26", "05", 1980, "78945612364", "miguel@mrjavabet.com", "krasner"));
@@ -543,7 +607,6 @@ public class Sistema {
         jogo4.setPlacar(1, 0);
         jogos.add(jogo4);
     }
-
     public void testeGerarBolao() {
         ArrayList<Aposta> apostas = new ArrayList<>();
         apostas.add(new Aposta(jogos.get(0), "Grêmio"));
