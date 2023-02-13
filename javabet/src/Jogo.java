@@ -67,13 +67,8 @@ public class Jogo {
         return campeonato;
     }
 
-
     @Override
     public String toString() {
         return times[0] + " x " + times[1] + " | " + campeonato + " | " + pais;
-//        return "Jogo\nCampeonato: " + campeonato + " | pais: " + pais +
-//                "\nTimes: " + Arrays.toString(times) +
-//                "\nPlacar: " + Arrays.toString(placar) +
-//                "\nFinalizado: " + finalizado + '}';
     }
 }
