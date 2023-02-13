@@ -76,57 +76,39 @@ public class Bolao implements Premio {
     }
 
     @Override
-    public boolean distribuirPremio(Apostador apostador) {
-//        if (!this.isFinalizado()){
-            int pontoPorCota = this.getPontos()/this.getCotas();
-            this.setFinalizado(true);
-            apostador.setPontos(apostador.getPontos() + pontoPorCota);
-            return true;
-//        }
-
-//        if (!this.getApostas().isEmpty()){
-//            int soma = this.getApostas().stream()
-//                    .filter(aposta -> aposta.getFinalizado())
-//                    .mapToInt(Aposta::getPrevisaoPlacar()[0])
-//                    .sum();
-//        }
-//        return false;
-    }
-
-    @Override
-    public boolean distribuirPremio(Bolao bolao) {
-        return false;
-    }
-
-    @Override
-    public boolean distribuirPremio() {
-//        Este variação do distribuirPremio tem como função percorrer toda a lista de apostas para solicitar o premio para o bolão
-        ArrayList<Boolean> distribuicaoOK = new ArrayList<>();
-        for (Aposta aposta : this.getApostas()){
-            distribuicaoOK.add(aposta.distribuirPremio(this));
-        }
-//        System.out.println(!distribuicaoOK.contains(false));
-        if (!distribuicaoOK.contains(false)){//Contem falso
-            for (Apostador apostador : this.getApostadores()){
-//                Nesse ponto é invocada a distribuição de pontos para cada apostador do bolão
-                this.distribuirPremio(apostador);
-            }
-        }
-        return true;
-    }
-
-    @Override
     public String toString() {
         return "Bolao | Apostas:\n" + apostas +
                 "\nFinalizado? " + finalizado +
                 '\n';
     }
-
+    @Override
+    public boolean distribuirPremio(Bolao bolao) {
+        return false;
+    }
+    @Override
+    public boolean distribuirPremio(Apostador apostador) {
+        int pontoPorCota = this.getPontos()/this.getCotas();
+        this.setFinalizado(true);
+        apostador.setPontos(apostador.getPontos() + pontoPorCota);
+        return true;
+    }
+    @Override
+    public boolean distribuirPremio() {
+        ArrayList<Boolean> distribuicaoOK = new ArrayList<>();
+        for (Aposta aposta : this.getApostas()){
+            distribuicaoOK.add(aposta.distribuirPremio(this));
+        }
+        if (!distribuicaoOK.contains(false)){//Contem falso
+            for (Apostador apostador : this.getApostadores()){
+                this.distribuirPremio(apostador);
+            }
+        }
+        return true;
+    }
     @Override
     public int getResultado() {
         return this.getApostas().stream()
                 .mapToInt(Aposta::getResultado)
                 .sum();
-
     }
 }
