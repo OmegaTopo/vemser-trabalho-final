@@ -260,11 +260,11 @@ public class Sistema {
                     System.out.println("\n\t----APOSTADORES TESTE GERADOS----");
                     break;
                 case "7":
-//                    testeGerarJogos();
+                    testeGerarJogos();
                     System.out.println("\n\t----JOGOS TESTE GERADOS----");
                     break;
                 case "8":
-//                    testeGerarBolao();
+                    testeGerarBolao();
                     System.out.println("\n\t----BOLÃO TESTE GERADOS----");
                     break;
                 case "0":
@@ -299,16 +299,14 @@ public class Sistema {
                 case "2":
                     System.out.println("\nComprar cota de bolão");
                     apostadorComprarCotaBolao();
-                    // FAZER
                     break;
                 case "3":
                     System.out.println("\nVerificar resultado de apostas");
                     apostadorVerificarApostas();
-                    // FAZER
                     break;
                 case "4":
                     System.out.println("\nVerificar resultado de bolões");
-                    // FAZER
+                    apostadorVerificarBoloes();
                     break;
                 case "5":
                     System.out.println(usuarioAtivo.toString());
@@ -334,11 +332,28 @@ public class Sistema {
             Jogo jogo = aposta.getJogo();
             System.out.println(aposta.toString());
             if (jogo.isFinalizado()){
-                System.out.println(jogo.toString() + " | Placar final: " + jogo.getPlacar()[0] + " x " + jogo.getPlacar()[1]);
-                System.out.println("Pontos ganhos: " + aposta.getResultado());
+                System.out.println("\t\t" + jogo.toString() + " | Placar final: " + jogo.getPlacar()[0] + " x " + jogo.getPlacar()[1]);
+                System.out.println("\t\tPontos ganhos: " + aposta.getResultado());
             } else {
-                System.out.println(jogo.toString());
-                System.out.println("Jogo ainda não finalizado.");
+                System.out.println("\t\t" + jogo.toString());
+                System.out.println("\t\tJogo ainda não finalizado.");
+            }
+        }
+    }
+    private void apostadorVerificarBoloes() {
+        int i = 1;
+        for (Bolao bolao : apostadorAtivo.getBoloes()) {
+            System.out.println("\n\tBolão " + i++);
+            for (Aposta aposta : bolao.getApostas()) {
+                Jogo jogo = aposta.getJogo();
+                System.out.println("\t\t" + aposta.toString());
+                if (jogo.isFinalizado()) {
+                    System.out.println("\t\t" + jogo.toString() + " | Placar final: " + jogo.getPlacar()[0] + " x " + jogo.getPlacar()[1]);
+                    System.out.println("\t\tPontos ganhos: " + aposta.getResultado());
+                } else {
+                    System.out.println("\t\t" + jogo.toString());
+                    System.out.println("\t\tJogo ainda não finalizado.");
+                }
             }
         }
     }
@@ -765,7 +780,7 @@ public class Sistema {
 
     public void depositar(){
         Apostador apostador = (Apostador) usuarioAtivo;
-        System.out.println(" Digite o valor que deseja depositar: ");
+        System.out.print("\tDigite o valor que deseja depositar: ");
         int valor = scanner.nextInt();
         scanner.nextLine();
         apostador.comprarPontos(valor);
