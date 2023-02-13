@@ -70,9 +70,10 @@ public class Jogo {
 
     @Override
     public String toString() {
-        return "Jogo\nCampeonato: " + campeonato + " | pais: " + pais +
-                "\nTimes: " + Arrays.toString(times) +
-                "\nPlacar: " + Arrays.toString(placar) +
-                "\nFinalizado: " + finalizado + '}';
+        return times[0] + " x " + times[1] + " | " + campeonato + " | " + pais;
+//        return "Jogo\nCampeonato: " + campeonato + " | pais: " + pais +
+//                "\nTimes: " + Arrays.toString(times) +
+//                "\nPlacar: " + Arrays.toString(placar) +
+//                "\nFinalizado: " + finalizado + '}';
     }
 }
