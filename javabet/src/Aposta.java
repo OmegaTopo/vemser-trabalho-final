@@ -9,16 +9,19 @@ public class Aposta implements Premio {
     final static int PONTOS_PLACAR_EXATO = 10;
     final static int PONTOS_TIME = 5;
 
-    public Aposta(Jogo jogo, String previsaoTime) {
+    public Aposta(Jogo jogo, int previsaoTime1,  int previsaoTime2) {
         this.jogo = jogo;
-        this.previsaoTime = previsaoTime;
+        this.setPrevisaoPlacar(0, previsaoTime1);
+        this.setPrevisaoPlacar(1, previsaoTime2);
+        if (previsaoTime1 > previsaoTime2){
+            this.previsaoTime = jogo.getTimes()[0];
+        } else if (previsaoTime1 < previsaoTime2) {
+            this.previsaoTime = jogo.getTimes()[1];
+        } else {
+            this.previsaoTime = "EMPATE";
+        }
         this.finalizado = false;
     }
-
-    public Aposta() {
-
-    }
- 
     public Jogo getJogo() {
         return jogo;
     }
