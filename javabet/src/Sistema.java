@@ -302,8 +302,8 @@ public class Sistema {
                     // FAZER
                     break;
                 case "3":
-
                     System.out.println("\nVerificar resultado de apostas");
+                    apostadorVerificarApostas();
                     // FAZER
                     break;
                 case "4":
@@ -325,6 +325,20 @@ public class Sistema {
                 default:
                     System.out.println("\nOpção inválida");
                     break;
+            }
+        }
+    }
+
+    private void apostadorVerificarApostas() {
+        for (Aposta aposta: apostadorAtivo.getApostas()) {
+            Jogo jogo = aposta.getJogo();
+            System.out.println(aposta.toString());
+            if (jogo.isFinalizado()){
+                System.out.println(jogo.toString() + " | Placar final: " + jogo.getPlacar()[0] + " x " + jogo.getPlacar()[1]);
+                System.out.println("Pontos ganhos: " + aposta.getResultado());
+            } else {
+                System.out.println(jogo.toString());
+                System.out.println("Jogo ainda não finalizado.");
             }
         }
     }
