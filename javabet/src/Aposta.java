@@ -100,6 +100,6 @@ public class Aposta implements Premio {
 
     @Override
     public String toString() {
-        return "Aposta{" + "jogo=" + jogo + ", previsaoTime=" + previsaoTime + ", previsaoPlacar=" + Arrays.toString(previsaoPlacar) + ", finalizado=" + finalizado + '}';
+        return "Previsão: Vencedor " + previsaoTime + " | Placar: " + previsaoPlacar[0] + " X " + previsaoPlacar[1];
     }
 }

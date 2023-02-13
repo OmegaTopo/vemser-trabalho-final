@@ -122,6 +122,7 @@ public class Sistema {
         listarJogos();
         System.out.print("\t\tEscolha o jogo para apostar:");
         String opcao = scanner.nextLine();
+        //Erro aqui
         int index = 0; // Este padrão é apenas para não dar erro adiante, mas ao tentar transformar a opção em int isso será trocado.
         try {
             index = Integer.parseInt(opcao);
@@ -156,6 +157,7 @@ public class Sistema {
         apostadores.get(apostadores.indexOf(usuarioAtivo)).getApostas().add(novaAposta);
         //REALIZAR PRINT DA APOSTA FINAL
         System.out.println("\n\t----APOSTA REALIZADA COM SUCESSO----");
+        //Invocar um método para descontar os pontos do apostador
     }
 
     //    Métodos gerais de funcionamento do sistema
@@ -179,12 +181,8 @@ public class Sistema {
         String opcao = "";
         while (!opcao.equals("0")) {
             System.out.println("\n\tMenu Principal\n--------------------");
-            System.out.println("\t1. Cadastro de Apostador");
-            System.out.println("\t2. Consulta de Apostadores");
-            System.out.println("\t3. Atualizar");
-            System.out.println("\t4. Remover");
-            System.out.println("\t5. Login");
-            System.out.println("\t6. Consulta de Jogos");
+            System.out.println("\t1. Login");
+            System.out.println("\t2. Cadastro de Apostador");
             System.out.println("\t0. Sair");
             System.out.print("\tDigite a opção desejada: ");
             opcao = scanner.nextLine();
@@ -193,29 +191,16 @@ public class Sistema {
                     administradorCrud.cadastroDeAdm();
                     break;
                 case "1":
-                    cadastroDeApostador();
-                    break;
-                case "2":
-                    listarApostadores();
-                    break;
-                case "3":
-                    atualizarApostador();
-                    break;
-                case "4":
-                    removerApostador();
-                    break;
-                case "5":
                     menuLogin();
                     break;
-                case "6":
-                    listarJogos();
+                case "2":
+                    cadastroDeApostador();
                     break;
                 case "0":
                     System.out.println("\tSaindo do sistema...");
                     break;
                 default:
                     System.out.println("\tOpção inválida!");
-                    menuPrincipal();
                     break;
             }
         }
@@ -354,6 +339,8 @@ public class Sistema {
                 case "3":
                     break;
                 case "4":
+                    listarApostadores();
+                    removerApostador();
                     break;
                 default:
                     break;
@@ -402,6 +389,7 @@ public class Sistema {
                 case "1":
                     break;
                 case "2":
+                    listarBolao();
                     break;
                 case "3":
                     break;
@@ -450,9 +438,28 @@ public class Sistema {
         Jogo jogo;
         for (int i = 0; i < jogos.size(); i++) {
             jogo = jogos.get(i);
-//            Isso tem que ir para o Jogo.toString()
-            System.out.println("\t\t\t" + (i + 1) + ". " + jogo.getTimes()[0] + " x " + jogo.getTimes()[1] + " | " + jogo.getCampeonato() + " | " + jogo.getPais());
+//            System.out.println("\t\t\t" + (i + 1) + ". " + jogo.getTimes()[0] + " x " + jogo.getTimes()[1] + " | " + jogo.getCampeonato() + " | " + jogo.getPais());
+            System.out.println("\t\t\t" + (i + 1) + ". " + jogo.toString());
         }
+    }
+    public void listarBolao() {
+        System.out.println("\n\t\tLISTA DE Bolão\n\t\t---------------------");
+        Bolao bolao;
+        for (int i = 0; i < boloes.size(); i++) {
+            bolao = boloes.get(i);
+            System.out.println("\t\t" + (i + 1) + ". Bolão:");
+            Aposta aposta;
+            for (int j = 0; j < bolao.getApostas().size(); j++){
+                aposta = bolao.getApostas().get(j);
+                System.out.println("\t\t\t" + (j + 1) + ". " + aposta.getJogo().toString());
+                System.out.println("\t\t\t\t" + aposta.toString()); // confiogurar toString;
+            }
+//            System.out.println("\t\t\t" + (i + 1) + ". " + bolao.getTimes()[0] + " x " + bolao.getTimes()[1] + " | " + jogo.getCampeonato() + " | " + jogo.getPais());
+        }
+
+        //Listar cada Bolao dentro dos bolões
+        //Listar cada Aposta dentro das apostas do bolão
+        //Listar cada Jogo dentro da Aposta
     }
 
     public void gerarJogo() {
@@ -504,6 +511,7 @@ public class Sistema {
     //    Métodos relacionados aos testes e acessíveis no menu do ADM
     public void testeInicializar() {
         this.administradorCrud.getAdministradores().add(new Administrador("adm@adm.com", "adm"));
+        this.administradorCrud.getAdministradores().add(new Administrador("", ""));
         this.testeGerarApostadores();
         this.testeGerarJogos();
         this.testeGerarBolao();
@@ -535,6 +543,7 @@ public class Sistema {
         jogo4.setPlacar(1, 0);
         jogos.add(jogo4);
     }
+
     public void testeGerarBolao() {
         ArrayList<Aposta> apostas = new ArrayList<>();
         apostas.add(new Aposta(jogos.get(0), "Grêmio"));
@@ -546,8 +555,8 @@ public class Sistema {
         apostas.get(1).setPrevisaoPlacar(1, 1);
 
         apostas.add(new Aposta(jogos.get(2), "Flamengo"));
-        apostas.get(1).setPrevisaoPlacar(0, 2);
-        apostas.get(1).setPrevisaoPlacar(1, 1);
+        apostas.get(2).setPrevisaoPlacar(0, 2);
+        apostas.get(2).setPrevisaoPlacar(1, 1);
 
         boloes.add(new Bolao(5));
 
