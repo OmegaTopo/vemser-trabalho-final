@@ -9,6 +9,7 @@ public class Sistema {
     private ArrayList<Jogo> jogos = new ArrayList<>();
     private ArrayList<Bolao> boloes = new ArrayList<>();
     private Usuario usuarioAtivo;
+    private Apostador apostadorAtivo; // add
     private Ranking ranking = new Ranking(jogos, apostadores);
 
     //  Funções relacionadas ao Apostador
@@ -209,6 +210,7 @@ public class Sistema {
 
         if (verificarLogin(email, senha)) {
             if (usuarioAtivo instanceof Apostador) {
+                apostadorAtivo = apostadores.get(apostadores.indexOf(usuarioAtivo)); //add
                 menuApostador();
             } else if (usuarioAtivo instanceof Administrador) {
                 menuAdministrador();
@@ -295,11 +297,12 @@ public class Sistema {
                     apostadorRealizarAposta();
                     break;
                 case "2":
-                    //Listar bolões
                     System.out.println("\nComprar cota de bolão");
+                    apostadorComprarCotaBolao();
                     // FAZER
                     break;
                 case "3":
+
                     System.out.println("\nVerificar resultado de apostas");
                     // FAZER
                     break;
@@ -323,6 +326,22 @@ public class Sistema {
                     System.out.println("\nOpção inválida");
                     break;
             }
+        }
+    }
+
+    //add
+    private void apostadorComprarCotaBolao() {
+        listarBolao();
+        System.out.print("\t\tEscolha o bolão para apostar:");
+        int opcao = scanner.nextInt();
+        scanner.nextLine();
+        Bolao bolao = boloes.get(opcao - 1);
+        if (bolao.getCotas() > bolao.getApostadores().size()){
+            apostadorAtivo.comprarCotaBolao(bolao);
+            apostadorAtivo.setPontos(apostadorAtivo.getPontos() - 4);
+            System.out.println("\t\t----COTA DE BOLÃO COMPRADA COM SUCESSO----\n");
+        } else {
+            System.out.println("\t\t\n----O bolão selecionado não tem cotas disponíveis----\n");
         }
     }
 
@@ -482,28 +501,28 @@ public class Sistema {
         System.out.println("\n\tRealizar Bolão\n--------------------");
         Bolao bolao = new Bolao (3);
         for(int i =0; i<3; i++){
-        listarJogos();
-        System.out.print("\t\tEscolha o jogo para apostar:");
-        String opcao = scanner.nextLine();
-        int index = 0; // Este padrão é apenas para não dar erro adiante, mas ao tentar transformar a opção em int isso será trocado.
-        try {
-            index = Integer.parseInt(opcao);
-        } catch (Exception e) {
-            System.out.println("\n\t----JOGO NÃO ENCONTRADO----");
-            return;
-        }
-        Jogo jogo = jogos.get(index - 1);
-        System.out.println("\tVocê escolheu o jogo: " + jogo.getTimes()[0] + " x " + jogo.getTimes()[1] + " | " + jogo.getCampeonato() + " | " + jogo.getPais());
-        System.out.println("\t\t1. " + jogo.getTimes()[0]);
-        System.out.println("\t\t2. " + jogo.getTimes()[1]);
-        System.out.println("\tDigite a previsão de placar para " + jogo.getTimes()[0] + ": ");
-        int previsaoTime1 = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("\tDigite a previsão de placar para " + jogo.getTimes()[1] + ": ");
-        int previsaoTime2 = scanner.nextInt();
-        scanner.nextLine();
-        Aposta novaAposta = new Aposta(jogo, previsaoTime1, previsaoTime2);
-        bolao.getApostas().add(novaAposta);
+            listarJogos();
+            System.out.print("\t\tEscolha o jogo para apostar:");
+            String opcao = scanner.nextLine();
+            int index = 0; // Este padrão é apenas para não dar erro adiante, mas ao tentar transformar a opção em int isso será trocado.
+            try {
+                index = Integer.parseInt(opcao);
+            } catch (Exception e) {
+                System.out.println("\n\t----JOGO NÃO ENCONTRADO----");
+                return;
+            }
+            Jogo jogo = jogos.get(index - 1);
+            System.out.println("\tVocê escolheu o jogo: " + jogo.getTimes()[0] + " x " + jogo.getTimes()[1] + " | " + jogo.getCampeonato() + " | " + jogo.getPais());
+            System.out.println("\t\t1. " + jogo.getTimes()[0]);
+            System.out.println("\t\t2. " + jogo.getTimes()[1]);
+            System.out.println("\tDigite a previsão de placar para " + jogo.getTimes()[0] + ": ");
+            int previsaoTime1 = scanner.nextInt();
+            scanner.nextLine();
+            System.out.println("\tDigite a previsão de placar para " + jogo.getTimes()[1] + ": ");
+            int previsaoTime2 = scanner.nextInt();
+            scanner.nextLine();
+            Aposta novaAposta = new Aposta(jogo, previsaoTime1, previsaoTime2);
+            bolao.getApostas().add(novaAposta);
         }
         System.out.println("\n\t----BOLÃO CRIADO COM SUCESSO----");
         boloes.add(bolao);
@@ -574,81 +593,81 @@ public class Sistema {
     }
 
     public void atualizarJogo() {
-            System.out.println("\n\tATUALIZAÇÃO DE JOGO\n\t------------------------");
-            listarJogos();
-            System.out.print("\tDigite o número do jogo: ");
-            String indexStr = scanner.nextLine();
-            try {
-                int index = Integer.parseInt(indexStr);
-                if (index >= 0 && index <= jogos.size()) {
-                    Jogo jogoSelecionado = jogos.get(index - 1);
-                    System.out.println("\t\t1 - Campeonato");
-                    System.out.println("\t\t2 - País");
-                    System.out.println("\t\t3 - Time 1");
-                    System.out.println("\t\t4 - Time 2");
-                    System.out.println("\t\t5 - " + ((jogoSelecionado.isFinalizado())?("Reabrir jogo"):("Finalizar jogo")));
-                    System.out.print("\t\tDigite o número do que deseja alterar: ");
-                    int escolha = scanner.nextInt();
-                    scanner.nextLine();
-                    switch (escolha) {
-                        case 1:
-                            System.out.print("\t\tDigite o novo campeonato: ");
-                            jogoSelecionado.setCampeonato(scanner.nextLine());
+        System.out.println("\n\tATUALIZAÇÃO DE JOGO\n\t------------------------");
+        listarJogos();
+        System.out.print("\tDigite o número do jogo: ");
+        String indexStr = scanner.nextLine();
+        try {
+            int index = Integer.parseInt(indexStr);
+            if (index >= 0 && index <= jogos.size()) {
+                Jogo jogoSelecionado = jogos.get(index - 1);
+                System.out.println("\t\t1 - Campeonato");
+                System.out.println("\t\t2 - País");
+                System.out.println("\t\t3 - Time 1");
+                System.out.println("\t\t4 - Time 2");
+                System.out.println("\t\t5 - " + ((jogoSelecionado.isFinalizado())?("Reabrir jogo"):("Finalizar jogo")));
+                System.out.print("\t\tDigite o número do que deseja alterar: ");
+                int escolha = scanner.nextInt();
+                scanner.nextLine();
+                switch (escolha) {
+                    case 1:
+                        System.out.print("\t\tDigite o novo campeonato: ");
+                        jogoSelecionado.setCampeonato(scanner.nextLine());
+                        break;
+                    case 2:
+                        System.out.print("\t\tDigite o novo país: ");
+                        jogoSelecionado.setPais(scanner.nextLine());
+                        break;
+                    case 3:
+                        System.out.print("\t\tDigite o novo time 1: ");
+                        jogoSelecionado.setTimes(0, scanner.nextLine());
+                        break;
+                    case 4:
+                        System.out.print("\t\tDigite o novo time 2: ");
+                        jogoSelecionado.setTimes(1, scanner.nextLine());
+                        break;
+                    case 5:
+                        if (jogoSelecionado.isFinalizado()){
+                            jogoSelecionado.setFinalizado(false);
+                            System.out.println("\t\t\tJogo reaberto para apostas");
                             break;
-                        case 2:
-                            System.out.print("\t\tDigite o novo país: ");
-                            jogoSelecionado.setPais(scanner.nextLine());
-                            break;
-                        case 3:
-                            System.out.print("\t\tDigite o novo time 1: ");
-                            jogoSelecionado.setTimes(0, scanner.nextLine());
-                            break;
-                        case 4:
-                            System.out.print("\t\tDigite o novo time 2: ");
-                            jogoSelecionado.setTimes(1, scanner.nextLine());
-                            break;
-                        case 5:
-                            if (jogoSelecionado.isFinalizado()){
-                                jogoSelecionado.setFinalizado(false);
-                                System.out.println("\t\t\tJogo reaberto para apostas");
-                                break;
-                            } else {
-                                //Solicitar o novo placar
-                                int placar1, placar2;
-                                System.out.print("\t\tDigite o número de gols do time " + jogoSelecionado.getTimes()[0] + ": ");
-                                placar1 = scanner.nextInt();
-                                System.out.print("\t\tDigite o número de gols do time " + jogoSelecionado.getTimes()[1] + ": ");
-                                placar2 = scanner.nextInt();
-                                jogoSelecionado.setPlacar(placar1, placar2);
-                                jogoSelecionado.setFinalizado(true);
-                                for (Apostador apostador : apostadores){
-                                    for (Aposta aposta : apostador.getApostas()){
-                                        if (aposta.getJogo().equals(jogoSelecionado)){
-                                            aposta.distribuirPremio(apostador);
-                                        }
+                        } else {
+                            //Solicitar o novo placar
+                            int placar1, placar2;
+                            System.out.print("\t\tDigite o número de gols do time " + jogoSelecionado.getTimes()[0] + ": ");
+                            placar1 = scanner.nextInt();
+                            System.out.print("\t\tDigite o número de gols do time " + jogoSelecionado.getTimes()[1] + ": ");
+                            placar2 = scanner.nextInt();
+                            jogoSelecionado.setPlacar(placar1, placar2);
+                            jogoSelecionado.setFinalizado(true);
+                            for (Apostador apostador : apostadores){
+                                for (Aposta aposta : apostador.getApostas()){
+                                    if (aposta.getJogo().equals(jogoSelecionado)){
+                                        aposta.distribuirPremio(apostador);
                                     }
-                                    for (Bolao bolao : boloes) {
-                                        for (Aposta aposta : bolao.getApostas()) {
-                                            if (aposta.getJogo().equals(jogoSelecionado)) {
-                                                aposta.distribuirPremio(bolao);
-                                            }
+                                }
+                                for (Bolao bolao : boloes) {
+                                    for (Aposta aposta : bolao.getApostas()) {
+                                        if (aposta.getJogo().equals(jogoSelecionado)) {
+                                            aposta.distribuirPremio(bolao);
                                         }
                                     }
                                 }
-                                System.out.println("\t\t\tPrêmios distribuidos");
                             }
-                            System.out.println("\n\t" + jogoSelecionado.toString() + " | Placar final: " + jogoSelecionado.getPlacar()[0] + " x " + jogoSelecionado.getPlacar()[1] + "\n");
-                            break;
-                        default:
-                            System.out.println("\n\tOpção inválida.\n");
-                            break;
-                    }
-                } else {
-                    System.out.println("Jogo não encontrado.");
+                            System.out.println("\t\t\tPrêmios distribuidos");
+                        }
+                        System.out.println("\n\t" + jogoSelecionado.toString() + " | Placar final: " + jogoSelecionado.getPlacar()[0] + " x " + jogoSelecionado.getPlacar()[1] + "\n");
+                        break;
+                    default:
+                        System.out.println("\n\tOpção inválida.\n");
+                        break;
                 }
-            } catch (Exception e) {
-                System.out.println("\n\t----JOGO NÃO ENCONTRADO----");
+            } else {
+                System.out.println("Jogo não encontrado.");
             }
+        } catch (Exception e) {
+            System.out.println("\n\t----JOGO NÃO ENCONTRADO----");
+        }
 
 //            for (Apostador apostador : apostadores) {
 //                if (apostador.getCpf().equals(cpf)) {
@@ -762,9 +781,11 @@ public class Sistema {
         apostadores.add(new Apostador("Gabriel Schramm", "07", "02", 1998, "12345678998", "moura@mrjavabet.com", "schramm"));
         apostadores.add(new Apostador("Miguel Krasner", "26", "05", 1980, "78945612364", "miguel@mrjavabet.com", "krasner"));
         apostadores.add(new Apostador("Gabriel Kleiman", "09", "02", 1999, "74185296351", "kleiman@mrjavabet.com", "kleiman"));
+        apostadores.add(new Apostador("Vazio", "09", "02", 1999, "74185296351", " ", " "));
         apostadores.get(0).setPontos(200);
         apostadores.get(1).setPontos(250);
         apostadores.get(2).setPontos(300);
+        apostadores.get(3).setPontos(400);
     }
     public void testeGerarJogos() {
         Jogo jogo1 = new Jogo("Gauchão", "Brasil", "Grêmio", "Inter");
@@ -795,7 +816,7 @@ public class Sistema {
 
         apostas.add(new Aposta(jogos.get(2), 2,2));
 
-        boloes.add(new Bolao(3));
+        boloes.add(new Bolao(5));
 
         boloes.get(boloes.size() - 1).setApostas(apostas);
         boloes.get(boloes.size() - 1).setApostadores(apostadores);
