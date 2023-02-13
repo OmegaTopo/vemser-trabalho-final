@@ -151,7 +151,7 @@ public class Sistema {
 //        Adicionar tratamento de erro
         int previsaoTime2 = scanner.nextInt();
         scanner.nextLine();
-        Aposta novaAposta = new Aposta(jogo, escolhaTime);
+        Aposta novaAposta = new Aposta(jogo, previsaoTime1, previsaoTime2);
         novaAposta.setPrevisaoPlacar(0, previsaoTime1);
         novaAposta.setPrevisaoPlacar(1, previsaoTime2);
         apostadores.get(apostadores.indexOf(usuarioAtivo)).getApostas().add(novaAposta);
@@ -494,38 +494,62 @@ public class Sistema {
         int previsaoTime2 = scanner.nextInt();
         scanner.nextLine();
         Aposta novaAposta = new Aposta(jogo, previsaoTime1, previsaoTime2);
-        novaAposta.setPrevisaoPlacar(0, previsaoTime1);
-        novaAposta.setPrevisaoPlacar(1, previsaoTime2);
-        apostadores.get(apostadores.indexOf(usuarioAtivo)).getApostas().add(novaAposta);
-        //REALIZAR PRINT DA APOSTA FINAL
-        System.out.println("\n\t----BOLÃO CRIADO COM SUCESSO----");
+        bolao.getApostas().add(novaAposta);
         }
+        System.out.println("\n\t----BOLÃO CRIADO COM SUCESSO----");
+        boloes.add(bolao);
+
     }
 
     public void atualizarBolao(){
-        System.out.println("\n\tATUALIZAÇÃO DE JOGO\n\t------------------------");
-        listarJogos();
-        System.out.print("\tDigite o número do jogo que deseja alterar: ");
-        int index = scanner.nextInt();
-        scanner.nextLine();
-        index--;
-        System.out.println(" Digite o campeonato do jogo: ");
-        String campeonato = scanner.nextLine();
-        jogos.get(index).setCampeonato(campeonato);
-        System.out.println(" Digite o país do jogo: ");
-        String pais = scanner.nextLine();
-        jogos.get(index).setPais(pais);
-        System.out.println(" Digite o primeiro time: ");
-        String time1 = scanner.nextLine();
-        jogos.get(index).setTimes(0, time1);
-        System.out.println(" Digite o segundo time: ");
-        String time2 = scanner.nextLine();
-        jogos.get(index).setTimes(1, time2);
-
+        System.out.println("\n\tATUALIZAÇÃO DE BOLÃO\n\t------------------------");
+        listarBolao();
+        System.out.print("\tDigite o número do bolão que deseja alterar: ");
+        String indice = scanner.nextLine();
+        try {
+            boloes.remove(Integer.parseInt(indice) - 1);
+        } catch (Exception e) {
+            System.out.println("\n\t----BOLÃO NÃO ENCONTRADO----");
+        }
+        Bolao bolao = new Bolao (3);
+        for(int i =0; i<3; i++) {
+            listarJogos();
+            System.out.print("\t\tEscolha o jogo para apostar no bolão:");
+            String opcao = scanner.nextLine();
+            int index = 0;
+            try {
+                index = Integer.parseInt(opcao);
+            } catch (Exception e) {
+                System.out.println("\n\t----JOGO NÃO ENCONTRADO----");
+                return;
+            }
+            Jogo jogo = jogos.get(index - 1);
+            System.out.println("\tVocê escolheu o jogo: " + jogo.getTimes()[0] + " x " + jogo.getTimes()[1] + " | " + jogo.getCampeonato() + " | " + jogo.getPais());
+            System.out.println("\t\t1. " + jogo.getTimes()[0]);
+            System.out.println("\t\t2. " + jogo.getTimes()[1]);
+            System.out.println("\tDigite a previsão de placar para " + jogo.getTimes()[0] + ": ");
+            int previsaoTime1 = scanner.nextInt();
+            scanner.nextLine();
+            System.out.println("\tDigite a previsão de placar para " + jogo.getTimes()[1] + ": ");
+            int previsaoTime2 = scanner.nextInt();
+            scanner.nextLine();
+            Aposta novaAposta = new Aposta(jogo, previsaoTime1, previsaoTime2);
+            bolao.getApostas().add(novaAposta);
+        }
+        System.out.println("\n\t ------BOLÃO ATUALIZADO COM SUCESSO!----- ");
+        boloes.add(bolao);
     }
 
     public void removerBolao() {
-
+        listarBolao();
+        System.out.print("\tSelecione o número do bolão que deseja remover: ");
+        String selecao = scanner.nextLine();
+        try {
+            boloes.remove(Integer.parseInt(selecao) - 1);
+            System.out.println("\tBolão removido com sucesso.");
+        } catch (Exception e) {
+            System.out.println("\n\t----BOLÃO NÃO ENCONTRADO----");
+        }
     }
 
     public void gerarJogo() {
@@ -609,19 +633,13 @@ public class Sistema {
     }
     public void testeGerarBolao() {
         ArrayList<Aposta> apostas = new ArrayList<>();
-        apostas.add(new Aposta(jogos.get(0), "Grêmio"));
-        apostas.get(0).setPrevisaoPlacar(0, 2);
-        apostas.get(0).setPrevisaoPlacar(1, 1);
+        apostas.add(new Aposta(jogos.get(0), 2,3));
 
-        apostas.add(new Aposta(jogos.get(1), "Vitória"));
-        apostas.get(1).setPrevisaoPlacar(0, 2);
-        apostas.get(1).setPrevisaoPlacar(1, 1);
+        apostas.add(new Aposta(jogos.get(1), 2,1));
 
-        apostas.add(new Aposta(jogos.get(2), "Flamengo"));
-        apostas.get(2).setPrevisaoPlacar(0, 2);
-        apostas.get(2).setPrevisaoPlacar(1, 1);
+        apostas.add(new Aposta(jogos.get(2), 2,2));
 
-        boloes.add(new Bolao(5));
+        boloes.add(new Bolao(3));
 
         boloes.get(boloes.size() - 1).setApostas(apostas);
         boloes.get(boloes.size() - 1).setApostadores(apostadores);
