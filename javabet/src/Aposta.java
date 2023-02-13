@@ -103,6 +103,6 @@ public class Aposta implements Premio {
 
     @Override
     public String toString() {
-        return "Previsão: Vencedor " + previsaoTime + " | Placar: " + previsaoPlacar[0] + " X " + previsaoPlacar[1];
+        return "Previsão: Vencedor " + previsaoTime + " | Placar: " + previsaoPlacar[0] + " X " + previsaoPlacar[1] + "\n";
     }
 }
