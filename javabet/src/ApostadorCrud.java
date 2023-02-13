@@ -6,6 +6,36 @@ public class ApostadorCrud {
     private ArrayList<Apostador> apostadores = new ArrayList<>();
     Scanner scanner = new Scanner(System.in);
 
+    public void crudApostador() {
+        System.out.println("\n\t----CRUD APOSTADOR----");
+        String opcao = "";
+        while (!opcao.equals("0")) {
+            System.out.println("\t1 - Cadastrar Apostador");
+            System.out.println("\t2 - Listar Apostadores");
+            System.out.println("\t3 - Atualizar Apostador");
+            System.out.println("\t4 - Deletar Apostador");
+            System.out.println("\t0 - Sair");
+            System.out.print("\tEscolha uma opção: ");
+            opcao = scanner.nextLine();
+            switch (opcao) {
+                case "1":
+                    cadastroDeApostador();
+                    break;
+                case "2":
+                    listarApostadores();
+                    break;
+                case "3":
+                    atualizarApostador();
+                    break;
+                case "4":
+                    removerApostador();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
     //  Funções relacionadas ao Apostador
     public void cadastroDeApostador() {
         try {
