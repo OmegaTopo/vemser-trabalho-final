@@ -22,11 +22,13 @@ public class Apostador extends Usuario implements Imprimir, Comparable<Apostador
 
     @Override
     public String toString() {
-        String bol;
+        String bol, apo;
         if (boloes.size() > 0) { bol = boloes.toString(); }
         else { bol = "Nenhum bolão ainda"; }
+        if (apostas.size() > 0) { apo = apostas.toString(); }
+        else { apo = "Nenhuma aposta ainda"; }
         return "Nome: " + nome + " | Pontos: " + pontos + "\n" +
-                "Apostas:" + "\n" + apostas + "\n" +
+                "Apostas:" + "\n" + apo + "\n" +
                 "Boloes:" + "\n" + bol;
     }
 
