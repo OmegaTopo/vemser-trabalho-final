@@ -780,7 +780,7 @@ public class Sistema {
 
     public void depositar(){
         Apostador apostador = (Apostador) usuarioAtivo;
-        System.out.println(" Digite o valor que deseja depositar: ");
+        System.out.print("\tDigite o valor que deseja depositar: ");
         int valor = scanner.nextInt();
         scanner.nextLine();
         apostador.comprarPontos(valor);
